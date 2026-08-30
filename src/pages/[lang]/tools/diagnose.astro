@@ -1,0 +1,159 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { localePaths } from '../../../i18n/routing';
+import { useTranslations, localizedPath, type Locale } from '../../../i18n/utils';
+import { getDiagnoseData } from '../../../lib/content';
+import { BODY_PARTS, SIGNS } from '../../../data/diagnostics';
+
+export const getStaticPaths = localePaths;
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+const base = import.meta.env.BASE_URL;
+const entries = await getDiagnoseData(locale);
+
+const crops = [...new Map(entries.map((e) => [e.cropId, { id: e.cropId, name: e.cropName, emoji: e.cropEmoji }])).values()];
+const parts = BODY_PARTS.map((id) => ({ id, label: t(`part.${id}`) }));
+const signs = SIGNS.map((id) => ({ id, label: t(`sign.${id}`) }));
+
+const strings = {
+  results: t('diagnose.results'),
+  noneYet: t('diagnose.noneYet'),
+  noMatch: t('diagnose.noMatch'),
+  match: t('diagnose.match'),
+  firstStep: t('diagnose.firstStep'),
+  seeFull: t('diagnose.seeFull'),
+  kindPest: t('diagnose.kindPest'),
+  kindDisease: t('diagnose.kindDisease'),
+  kindProblem: t('diagnose.kindProblem'),
+  cropsBase: localizedPath(base, locale, ''),
+};
+---
+
+<Base locale={locale} title={t('diagnose.title')} description={t('diagnose.intro')}>
+  <h1>{t('diagnose.title')}</h1>
+  <p class="lead">{t('diagnose.intro')}</p>
+
+  <form class="dx" data-dx>
+    <fieldset class="dx-step">
+      <legend>{t('diagnose.step1')}</legend>
+      <div class="chips" role="radiogroup">
+        {crops.map((crop) => (
+          <label class="chip-btn">
+            <input type="radio" name="crop" value={crop.id} />
+            <span>{crop.emoji} {crop.name}</span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+
+    <fieldset class="dx-step">
+      <legend>{t('diagnose.step2')}</legend>
+      <div class="chips">
+        {parts.map((part) => (
+          <label class="chip-btn">
+            <input type="checkbox" name="part" value={part.id} />
+            <span>{part.label}</span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+
+    <fieldset class="dx-step">
+      <legend>{t('diagnose.step3')}</legend>
+      <div class="chips">
+        {signs.map((sign) => (
+          <label class="chip-btn">
+            <input type="checkbox" name="sign" value={sign.id} />
+            <span>{sign.label}</span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+
+    <button type="button" class="btn btn--ghost" data-dx-reset>{t('diagnose.reset')}</button>
+  </form>
+
+  <section class="dx-results" data-dx-results aria-live="polite">
+    <p class="dx-hint">{t('diagnose.noneYet')}</p>
+  </section>
+
+  <p class="callout callout--caution mt">{t('diagnose.disclaimer')}</p>
+</Base>
+
+<script type="application/json" id="dx-entries" set:html={JSON.stringify(entries)} />
+<script type="application/json" id="dx-strings" set:html={JSON.stringify(strings)} />
+
+<style>
+  h1 { margin-block: var(--space-5) var(--space-2); color: var(--color-brand-dark); }
+  .lead { color: var(--color-text-soft); margin-bottom: var(--space-4); }
+
+  .dx { display: grid; gap: var(--space-5); }
+  .dx-step { border: 0; padding: 0; margin: 0; }
+  .dx-step legend {
+    font-weight: var(--weight-bold);
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-3);
+    padding: 0;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .chip-btn { position: relative; }
+  .chip-btn input {
+    position: absolute;
+    opacity: 0;
+    width: 100%; height: 100%;
+    margin: 0; cursor: pointer;
+  }
+  .chip-btn span {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-target);
+    padding: var(--space-2) var(--space-4);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface);
+    font-weight: var(--weight-medium);
+  }
+  .chip-btn input:focus-visible + span { outline: var(--focus-ring); outline-offset: 2px; }
+  .chip-btn input:checked + span {
+    background: var(--color-brand);
+    border-color: var(--color-brand);
+    color: #fff;
+  }
+
+  .dx-results { margin-top: var(--space-6); display: grid; gap: var(--space-3); }
+  .dx-hint { color: var(--color-text-soft); }
+  .dx-results h2 { color: var(--color-brand-dark); }
+
+  .dx-card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    padding: var(--space-4);
+    display: grid;
+    gap: var(--space-2);
+  }
+  .dx-card__head { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: baseline; }
+  .dx-card__name { font-weight: var(--weight-bold); font-size: var(--text-lg); }
+  .dx-card__crop { font-size: var(--text-sm); color: var(--color-text-soft); }
+  .dx-card__kind {
+    font-size: var(--text-xs);
+    padding: 2px var(--space-2);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface-2);
+  }
+  .dx-card__kind[data-k="pest"] { background: var(--color-danger-bg); color: var(--color-danger); }
+  .dx-card__kind[data-k="disease"] { background: var(--color-caution-bg); color: var(--color-caution); }
+  .dx-card__kind[data-k="problem"] { background: var(--color-info-bg); color: var(--color-info); }
+  .dx-meter { height: 8px; border-radius: 4px; background: var(--color-surface-2); overflow: hidden; }
+  .dx-meter i { display: block; height: 100%; background: var(--color-brand); }
+  .dx-card__detail { font-size: var(--text-sm); }
+  .dx-card__action { font-size: var(--text-sm); }
+  .dx-card__action strong { color: var(--color-brand-dark); }
+  .dx-card a { font-weight: var(--weight-medium); }
+  .mt { margin-top: var(--space-6); }
+</style>
+
+<script>
+  import '../../../scripts/diagnose';
+</script>

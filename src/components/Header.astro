@@ -19,7 +19,10 @@ const otherHref = localizedPath(base, other, currentPath.replace(/^\//, ''));
 
 const links = [
   { href: p(''), label: t('nav.home'), match: '/' },
+  { href: p('my-farm/'), label: t('nav.myFarm'), match: '/my-farm' },
   { href: p('crops/'), label: t('nav.crops'), match: '/crops' },
+  { href: p('tools/diagnose/'), label: t('nav.diagnose'), match: '/tools/diagnose' },
+  { href: p('tools/weather/'), label: t('nav.weather'), match: '/tools/weather' },
   { href: p('tools/calendar/'), label: t('nav.calendar'), match: '/tools/calendar' },
   { href: p('tools/calculator/'), label: t('nav.calculator'), match: '/tools/calculator' },
   { href: p('glossary/'), label: t('nav.glossary'), match: '/glossary' },

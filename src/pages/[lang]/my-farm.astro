@@ -1,0 +1,118 @@
+---
+import Base from '../../layouts/Base.astro';
+import { localePaths } from '../../i18n/routing';
+import { useTranslations, localizedPath, type Locale } from '../../i18n/utils';
+import { getToolData } from '../../lib/content';
+
+export const getStaticPaths = localePaths;
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+const base = import.meta.env.BASE_URL;
+const crops = await getToolData(locale);
+
+const strings = {
+  empty: t('myfarm.empty'),
+  emptyCta: t('myfarm.emptyCta'),
+  addCrop: t('myfarm.addCrop'),
+  thisWeek: t('myfarm.thisWeek'),
+  watchNow: t('myfarm.watchNow'),
+  currentStage: t('myfarm.currentStage'),
+  day: t('myfarm.day'),
+  dayOf: t('myfarm.dayOf'),
+  sownOn: t('myfarm.sownOn'),
+  transplantedOn: t('myfarm.transplantedOn'),
+  nextUp: t('myfarm.nextUp'),
+  finished: t('myfarm.finished'),
+  notStarted: t('myfarm.notStarted'),
+  openFull: t('myfarm.openFull'),
+  openGuide: t('myfarm.openGuide'),
+  remove: t('myfarm.remove'),
+  nothingThisWeek: t('myfarm.nothingThisWeek'),
+  days: t('crop.days'),
+  locale: locale === 'hi' ? 'hi-IN' : 'en-IN',
+  calendarBase: localizedPath(base, locale, 'tools/calendar/'),
+  cropsBase: localizedPath(base, locale, 'crops/'),
+};
+---
+
+<Base locale={locale} title={t('myfarm.title')} description={t('myfarm.intro')}>
+  <h1>{t('myfarm.title')}</h1>
+  <p class="lead">{t('myfarm.intro')}</p>
+
+  <div data-farm-list class="stack"></div>
+
+  <div data-farm-empty hidden class="empty-card card">
+    <p>{t('myfarm.empty')}</p>
+    <a class="btn" href={strings.calendarBase}>{t('myfarm.emptyCta')}</a>
+  </div>
+
+  <p data-farm-add hidden class="add-row">
+    <a class="btn btn--ghost" href={strings.calendarBase}>＋ {t('myfarm.addCrop')}</a>
+  </p>
+
+  <p class="callout callout--caution mt">{t('disclaimer.text')}</p>
+</Base>
+
+<script type="application/json" id="farm-crops" set:html={JSON.stringify(crops)} />
+<script type="application/json" id="farm-strings" set:html={JSON.stringify(strings)} />
+
+<style>
+  h1 { margin-block: var(--space-5) var(--space-2); color: var(--color-brand-dark); }
+  .lead { color: var(--color-text-soft); margin-bottom: var(--space-4); }
+
+  .farm-crop {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    overflow: hidden;
+  }
+  .farm-crop__head {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+    padding: var(--space-4);
+    background: var(--color-brand-light);
+  }
+  .farm-crop__emoji { font-size: 2.25rem; line-height: 1; }
+  .farm-crop__title { font-size: var(--text-lg); font-weight: var(--weight-bold); color: var(--color-brand-dark); }
+  .farm-crop__sub { font-size: var(--text-sm); color: var(--color-text-soft); }
+  .farm-crop__body { padding: var(--space-4); display: grid; gap: var(--space-4); }
+
+  .farm-stage { font-weight: var(--weight-medium); }
+  .farm-stage span { color: var(--color-text-soft); font-weight: var(--weight-normal); }
+
+  .farm-tasks { display: grid; gap: var(--space-1); }
+  .farm-tasks h3, .farm-watch h3 { font-size: var(--text-base); margin-bottom: var(--space-1); }
+  .farm-check { display: flex; gap: var(--space-2); align-items: flex-start; }
+  .farm-check input { width: 22px; height: 22px; margin-top: 2px; flex-shrink: 0; }
+  .farm-check span.done { text-decoration: line-through; color: var(--color-text-soft); }
+
+  .farm-watch { border-left: 4px solid var(--color-caution); background: var(--color-caution-bg); padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm); }
+  .farm-watch ul { margin: 0; padding-left: 1.1rem; font-size: var(--text-sm); }
+
+  .farm-next { font-size: var(--text-sm); color: var(--color-text-soft); }
+  .farm-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .farm-actions a, .farm-actions button {
+    min-height: 40px;
+    padding-inline: var(--space-3);
+    border-radius: var(--radius-pill);
+    border: 2px solid var(--color-border);
+    background: transparent;
+    color: var(--color-brand-dark);
+    font-weight: var(--weight-medium);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  .farm-banner { font-size: var(--text-sm); padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm); background: var(--color-surface-2); }
+
+  .empty-card { display: grid; gap: var(--space-3); justify-items: start; }
+  .add-row { margin-top: var(--space-4); }
+  .mt { margin-top: var(--space-6); }
+</style>
+
+<script>
+  import '../../scripts/my-farm';
+</script>

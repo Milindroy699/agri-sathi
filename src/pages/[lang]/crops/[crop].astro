@@ -89,6 +89,9 @@ const reviewed = d.lastReviewed.toLocaleDateString(locale === 'hi' ? 'hi-IN' : '
     <a class="btn btn--ghost" href={`${localizedPath(base, locale, 'tools/calculator/')}?crop=${crop.id}`}>
       🧮 {t('crop.useInCalculator')}
     </a>
+    <a class="btn btn--ghost" href={`${localizedPath(base, locale, 'tools/diagnose/')}?crop=${crop.id}`}>
+      🔍 {t('nav.diagnose')}
+    </a>
   </div>
 
   <div class="tabs" data-tabs>

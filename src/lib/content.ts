@@ -1,6 +1,7 @@
 import { getCollection } from 'astro:content';
 import type { Locale } from '../i18n/utils';
 import { pick } from '../i18n/utils';
+import { DIAGNOSTICS } from '../data/diagnostics';
 
 export async function getCrops() {
   const crops = await getCollection('crops');
@@ -60,6 +61,87 @@ export async function getToolData(locale: Locale) {
       })),
     };
   });
+}
+
+/** Symptom-tagged pest / disease / disorder list for the Diagnosis tool. */
+export async function getDiagnoseData(locale: Locale) {
+  const crops = await getCrops();
+  const line = (f: { en: string[]; hi?: string[] } | undefined) =>
+    (f && (pick(f, locale) ?? f.en)) || [];
+
+  const results: Array<{
+    id: string;
+    cropId: string;
+    cropName: string;
+    cropEmoji: string;
+    kind: 'pest' | 'disease' | 'problem';
+    name: string;
+    detail: string;
+    firstAction: string;
+    url: string;
+    parts: string[];
+    signs: string[];
+  }> = [];
+
+  for (const crop of crops) {
+    const entries = DIAGNOSTICS[crop.id] ?? [];
+    const d = crop.data;
+    for (const [i, entry] of entries.entries()) {
+      const needle = entry.match.toLowerCase();
+      let name = '';
+      let detail = '';
+      let firstAction = '';
+      let anchor = '';
+
+      if (entry.kind === 'problem') {
+        const hit = d.commonProblems.find((p) => p.symptom.en.toLowerCase().includes(needle));
+        if (!hit) continue;
+        name = pick(hit.symptom, locale) ?? hit.symptom.en;
+        detail = pick(hit.likelyCause, locale) ?? hit.likelyCause.en;
+        firstAction = pick(hit.action, locale) ?? hit.action.en;
+        anchor = 'panel-problems';
+      } else {
+        const pool = entry.kind === 'pest' ? d.pests : d.diseases;
+        const hit = pool.find((p) => p.name.en.toLowerCase().includes(needle));
+        if (!hit) continue;
+        name = pick(hit.name, locale) ?? hit.name.en;
+        detail = pick(hit.identify, locale) ?? hit.identify.en;
+        firstAction = line(hit.ipm)[0] || line(hit.chemical)[0] || '';
+        anchor = 'panel-pests';
+      }
+
+      results.push({
+        id: `${crop.id}-${i}`,
+        cropId: crop.id,
+        cropName: pick(d.name, locale) ?? d.name.en,
+        cropEmoji: d.emoji,
+        kind: entry.kind,
+        name,
+        detail,
+        firstAction,
+        url: `crops/${crop.id}/#${anchor}`,
+        parts: entry.parts,
+        signs: entry.signs,
+      });
+    }
+  }
+  return results;
+}
+
+/** Per-crop stage list keyed by day-after-sowing, for weather advisories. */
+export async function getCropStageWindows(locale: Locale) {
+  const crops = await getCrops();
+  return crops.map((crop) => ({
+    id: crop.id,
+    name: pick(crop.data.name, locale) ?? crop.data.name.en,
+    emoji: crop.data.emoji,
+    basis: crop.data.calendar.basis,
+    stages: crop.data.calendar.stages.map((s) => ({
+      name: pick(s.name, locale) ?? s.name.en,
+      startDap: s.startDap,
+      endDap: s.endDap,
+    })),
+  }));
 }
 
 export async function getGlossary() {

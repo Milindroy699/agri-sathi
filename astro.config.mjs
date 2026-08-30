@@ -54,6 +54,17 @@ export default defineConfig({
               expiration: { maxEntries: 120, maxAgeSeconds: 60 * 60 * 24 * 60 },
             },
           },
+          {
+            // Weather forecast — fresh when online, last-known when offline.
+            urlPattern: ({ url }) => url.origin === 'https://api.open-meteo.com',
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'agri-sathi-weather',
+              networkTimeoutSeconds: 6,
+              expiration: { maxEntries: 8, maxAgeSeconds: 60 * 60 * 12 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
         ],
       },
       devOptions: { enabled: false },

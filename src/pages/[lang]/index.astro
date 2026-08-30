@@ -4,7 +4,7 @@ import CropCard from '../../components/CropCard.astro';
 import CropSearch from '../../components/CropSearch.astro';
 import { localePaths } from '../../i18n/routing';
 import { useTranslations, localizedPath, type Locale } from '../../i18n/utils';
-import { getCropIndex } from '../../lib/content';
+import { getCropIndex, getToolData } from '../../lib/content';
 
 export const getStaticPaths = localePaths;
 
@@ -13,12 +13,23 @@ const t = useTranslations(locale);
 const base = import.meta.env.BASE_URL;
 const p = (path: string) => localizedPath(base, locale, path);
 const crops = await getCropIndex(locale);
+const toolData = await getToolData(locale);
 
 const tools = [
+  { href: p('tools/diagnose/'), icon: '🔍', title: t('nav.diagnose'), text: t('diagnose.intro') },
+  { href: p('tools/weather/'), icon: '🌦️', title: t('nav.weather'), text: t('weather.intro') },
   { href: p('tools/calendar/'), icon: '📅', title: t('nav.calendar'), text: t('calendar.intro') },
   { href: p('tools/calculator/'), icon: '🧮', title: t('nav.calculator'), text: t('calc.intro') },
-  { href: p('glossary/'), icon: '📖', title: t('nav.glossary'), text: t('about.offlineText') },
+  { href: p('glossary/'), icon: '📖', title: t('nav.glossary'), text: t('home.glossaryText') },
 ];
+
+const farmStrings = {
+  currentStage: t('myfarm.currentStage'),
+  thisWeek: t('myfarm.thisWeek'),
+  day: t('myfarm.day'),
+  nothingThisWeek: t('myfarm.nothingThisWeek'),
+  locale: locale === 'hi' ? 'hi-IN' : 'en-IN',
+};
 ---
 
 <Base locale={locale} title={t('app.name')} description={t('home.heroText')}>
@@ -30,6 +41,14 @@ const tools = [
       <a class="btn" href={p('crops/')}>{t('home.browseCrops')}</a>
       <a class="btn btn--ghost" href={p('tools/calendar/')}>{t('home.openCalendar')}</a>
     </div>
+  </section>
+
+  <section class="stack" data-farm-home hidden>
+    <div class="farm-home__head">
+      <h2>{t('myfarm.homeHeading')}</h2>
+      <a href={p('my-farm/')}>{t('myfarm.homeSeeAll')} →</a>
+    </div>
+    <div data-farm-home-list class="farm-home__list"></div>
   </section>
 
   <section class="stack">
@@ -63,6 +82,9 @@ const tools = [
   </section>
 </Base>
 
+<script type="application/json" id="farm-home-crops" set:html={JSON.stringify(toolData)} />
+<script type="application/json" id="farm-home-strings" set:html={JSON.stringify(farmStrings)} />
+
 <style>
   .hero { margin-block: var(--space-5) var(--space-8); }
   .hero h1 { font-size: var(--text-2xl); color: var(--color-brand-dark); }
@@ -70,6 +92,22 @@ const tools = [
   .hero__cta { display: flex; flex-wrap: wrap; gap: var(--space-3); }
 
   section { margin-block: var(--space-8); }
+
+  .farm-home__head { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: baseline; justify-content: space-between; }
+  .farm-home__head h2 { color: var(--color-brand-dark); }
+  .farm-home__head a { font-weight: var(--weight-medium); }
+  .farm-home__list { display: grid; gap: var(--space-3); }
+  .farm-home__card {
+    border: 1px solid var(--color-brand);
+    border-radius: var(--radius);
+    background: var(--color-brand-light);
+    padding: var(--space-4);
+  }
+  .farm-home__card h3 { font-size: var(--text-lg); color: var(--color-brand-dark); }
+  .farm-home__card .fh-stage { font-size: var(--text-sm); color: var(--color-text-soft); margin-block: var(--space-1); }
+  .farm-home__card ul { margin: var(--space-2) 0 0; padding-left: 1.2rem; font-size: var(--text-sm); }
+  .farm-home__card li { margin-block: var(--space-1); }
+  .farm-home__card li.more { list-style: none; margin-left: -1.2rem; color: var(--color-text-soft); }
 
   .tool-grid { display: grid; gap: var(--space-3); }
   .tool-card {
@@ -92,8 +130,13 @@ const tools = [
   @media (min-width: 40rem) {
     .tool-grid { grid-template-columns: repeat(3, 1fr); }
     .crop-grid { grid-template-columns: repeat(2, 1fr); }
+    .farm-home__list { grid-template-columns: repeat(2, 1fr); }
   }
   @media (min-width: 60rem) {
     .crop-grid { grid-template-columns: repeat(3, 1fr); }
   }
 </style>
+
+<script>
+  import '../../scripts/farm-home';
+</script>
