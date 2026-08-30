@@ -1,0 +1,27 @@
+---
+// Root entry: send visitors to their last language, else English.
+const base = import.meta.env.BASE_URL;
+const target = `${base}en/`.replace(/\/{2,}/g, '/');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <link rel="canonical" href={target} />
+    <title>Agri Sathi</title>
+    <script is:inline define:vars={{ base }}>
+      try {
+        const saved = localStorage.getItem('agri-sathi:locale');
+        const lang = saved === 'hi' ? 'hi' : 'en';
+        location.replace((base + lang + '/').replace(/\/{2,}/g, '/'));
+      } catch {
+        location.replace((base + 'en/').replace(/\/{2,}/g, '/'));
+      }
+    </script>
+  </head>
+  <body>
+    <p>Opening Agri Sathi… <a href={target}>Continue</a></p>
+  </body>
+</html>

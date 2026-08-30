@@ -1,0 +1,79 @@
+---
+import Base from '../../layouts/Base.astro';
+import { localePaths } from '../../i18n/routing';
+import { useTranslations, pick, type Locale } from '../../i18n/utils';
+import { getGlossary } from '../../lib/content';
+
+export const getStaticPaths = localePaths;
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+const terms = await getGlossary();
+---
+
+<Base locale={locale} title={t('nav.glossary')}>
+  <h1>{t('nav.glossary')}</h1>
+
+  <input
+    type="search"
+    class="filter"
+    placeholder={t('home.searchPlaceholder')}
+    aria-label={t('home.searchLabel')}
+    data-glossary-filter
+  />
+
+  <dl class="glossary" data-glossary-list>
+    {terms.map((entry) => (
+      <div class="glossary__item" data-term={`${entry.data.term.en} ${entry.data.term.hi ?? ''}`.toLowerCase()}>
+        <dt>
+          {pick(entry.data.term, locale)}
+          {locale === 'hi' && entry.data.term.hi && entry.data.term.en !== entry.data.term.hi && (
+            <span class="glossary__alt">{entry.data.term.en}</span>
+          )}
+        </dt>
+        <dd>{pick(entry.data.definition, locale)}</dd>
+      </div>
+    ))}
+  </dl>
+  <p class="empty" data-glossary-empty hidden>{t('search.noResults')}</p>
+</Base>
+
+<style>
+  h1 { margin-block: var(--space-5) var(--space-3); color: var(--color-brand-dark); }
+  .filter {
+    width: 100%;
+    min-height: var(--tap-target);
+    padding-inline: var(--space-4);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    margin-bottom: var(--space-4);
+  }
+  .filter:focus { outline: none; border-color: var(--color-brand); }
+  .glossary { display: grid; gap: var(--space-2); }
+  .glossary__item {
+    padding: var(--space-3);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+  }
+  .glossary__item dt { font-weight: var(--weight-bold); color: var(--color-brand-dark); }
+  .glossary__alt { font-weight: var(--weight-normal); color: var(--color-text-soft); font-size: var(--text-sm); margin-left: var(--space-2); }
+  .glossary__item dd { margin: var(--space-1) 0 0; font-size: var(--text-sm); }
+  .empty { color: var(--color-text-soft); }
+</style>
+
+<script>
+  const input = document.querySelector<HTMLInputElement>('[data-glossary-filter]');
+  const items = Array.from(document.querySelectorAll<HTMLElement>('.glossary__item'));
+  const empty = document.querySelector<HTMLElement>('[data-glossary-empty]');
+  input?.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    let shown = 0;
+    items.forEach((item) => {
+      const match = !q || (item.dataset.term ?? '').includes(q);
+      item.hidden = !match;
+      if (match) shown += 1;
+    });
+    if (empty) empty.hidden = shown !== 0;
+  });
+</script>

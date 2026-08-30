@@ -1,0 +1,43 @@
+---
+import { useTranslations, localizedPath, type Locale } from '../i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const base = import.meta.env.BASE_URL;
+const p = (path: string) => localizedPath(base, locale, path);
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container-wide stack-sm">
+    <p class="site-footer__brand">🌾 {t('app.name')} — {t('app.tagline')}</p>
+    <nav aria-label={t('nav.menu')}>
+      <a href={p('about/')}>{t('nav.about')}</a>
+      <span aria-hidden="true">·</span>
+      <a href={p('glossary/')}>{t('nav.glossary')}</a>
+      <span aria-hidden="true">·</span>
+      <a href={p('faq/')}>{t('nav.faq')}</a>
+    </nav>
+    <p class="site-footer__note">{t('disclaimer.text')}</p>
+    <p class="site-footer__fine">© {year} · {t('about.offline')}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: var(--space-8);
+    background: var(--color-surface-2);
+    border-top: 1px solid var(--color-border);
+    padding-block: var(--space-6);
+    font-size: var(--text-sm);
+    color: var(--color-text-soft);
+  }
+  .site-footer__brand { font-weight: var(--weight-bold); color: var(--color-brand-dark); }
+  .site-footer nav { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .site-footer nav a { color: var(--color-info); }
+  .site-footer__note { max-width: var(--content-max); }
+  .site-footer__fine { font-size: var(--text-xs); }
+</style>

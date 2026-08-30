@@ -1,0 +1,150 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { localePaths } from '../../../i18n/routing';
+import { useTranslations, type Locale } from '../../../i18n/utils';
+import { getToolData } from '../../../lib/content';
+
+export const getStaticPaths = localePaths;
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+const crops = await getToolData(locale);
+
+const strings = {
+  today: t('calendar.today'),
+  todayTasks: t('calendar.todayTasks'),
+  nothingToday: t('calendar.nothingToday'),
+  stageNow: t('calendar.stageNow'),
+  upcoming: t('calendar.upcoming'),
+  past: t('calendar.past'),
+  tasks: t('stage.tasks'),
+  watchFor: t('stage.watchFor'),
+  saved: t('calendar.saved'),
+  savedPlans: t('calendar.savedPlans'),
+  delete: t('calendar.delete'),
+  reset: t('calendar.reset'),
+  day: t('stage.day'),
+  afterSowing: locale === 'hi' ? 'बुवाई के बाद' : 'after sowing',
+  afterTransplant: locale === 'hi' ? 'रोपाई के बाद' : 'after transplant',
+  locale: locale === 'hi' ? 'hi-IN' : 'en-IN',
+};
+---
+
+<Base locale={locale} title={t('calendar.title')} description={t('calendar.intro')}>
+  <h1>{t('calendar.title')}</h1>
+  <p class="lead">{t('calendar.intro')}</p>
+
+  <form class="cal-form card" data-cal-form>
+    <div class="field">
+      <label for="cal-crop">{t('calendar.selectCrop')}</label>
+      <select id="cal-crop" name="crop" required>
+        <option value="" disabled selected>—</option>
+        {crops.map((crop) => <option value={crop.id}>{crop.emoji} {crop.name}</option>)}
+      </select>
+    </div>
+    <div class="field">
+      <label for="cal-date">{t('calendar.sowingDate')}</label>
+      <input id="cal-date" name="date" type="date" required />
+    </div>
+    <button class="btn btn--block" type="submit">{t('calendar.generate')}</button>
+  </form>
+
+  <section data-cal-output hidden class="stack">
+    <div class="cal-actions">
+      <button class="btn btn--ghost" type="button" data-cal-reset>{strings.reset}</button>
+    </div>
+
+    <div class="today-box" data-cal-today></div>
+    <div data-cal-timeline class="stack-sm"></div>
+  </section>
+
+  <section data-cal-saved hidden class="stack-sm">
+    <h2>{t('calendar.savedPlans')}</h2>
+    <ul data-cal-saved-list class="saved-list"></ul>
+  </section>
+
+  <p class="callout callout--caution mt">{t('disclaimer.text')}</p>
+</Base>
+
+<script type="application/json" id="cal-crops" set:html={JSON.stringify(crops)} />
+<script type="application/json" id="cal-strings" set:html={JSON.stringify(strings)} />
+
+<style>
+  h1 { margin-block: var(--space-5) var(--space-2); color: var(--color-brand-dark); }
+  .lead { color: var(--color-text-soft); margin-bottom: var(--space-4); }
+  .cal-form { display: grid; gap: var(--space-4); }
+  .field { display: grid; gap: var(--space-2); }
+  .field label { font-weight: var(--weight-medium); }
+  .field select,
+  .field input {
+    min-height: var(--tap-target);
+    padding-inline: var(--space-3);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    font-size: var(--text-base);
+  }
+  .field select:focus,
+  .field input:focus { outline: none; border-color: var(--color-brand); }
+
+  section[data-cal-output] { margin-top: var(--space-6); }
+  .cal-actions { display: flex; justify-content: flex-end; }
+
+  .today-box {
+    background: var(--color-brand-light);
+    border: 1px solid var(--color-brand);
+    border-radius: var(--radius);
+    padding: var(--space-4);
+  }
+  .today-box :global(h2) { font-size: var(--text-lg); color: var(--color-brand-dark); margin-bottom: var(--space-2); }
+  .today-box :global(ul) { padding-left: 1.25rem; }
+  .today-box :global(li) { margin-block: var(--space-1); }
+
+  .cal-stage {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    padding: var(--space-4);
+  }
+  .cal-stage[data-state='now'] { border-color: var(--color-brand); border-width: 2px; }
+  .cal-stage[data-state='past'] { opacity: 0.65; }
+  .cal-stage__head { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: baseline; }
+  .cal-stage__head h3 { font-size: var(--text-lg); }
+  .cal-stage__dates { font-size: var(--text-sm); color: var(--color-text-soft); }
+  .cal-stage__state {
+    font-size: var(--text-xs);
+    padding: 2px var(--space-2);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface-2);
+  }
+  .cal-stage__state[data-s='now'] { background: var(--color-brand); color: #fff; }
+  .cal-check { display: flex; gap: var(--space-2); align-items: flex-start; margin-block: var(--space-1); }
+  .cal-check input { width: 22px; height: 22px; margin-top: 2px; flex-shrink: 0; }
+  .cal-warn { color: var(--color-caution); font-weight: var(--weight-medium); margin-top: var(--space-2); }
+  .cal-warn + ul { padding-left: 1.25rem; }
+
+  .saved-list { list-style: none; padding: 0; display: grid; gap: var(--space-2); }
+  .saved-list li {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+  }
+  .saved-list button {
+    min-height: 40px;
+    padding-inline: var(--space-3);
+    border-radius: var(--radius-pill);
+    border: 2px solid var(--color-border);
+    background: transparent;
+    cursor: pointer;
+  }
+  .mt { margin-top: var(--space-6); }
+</style>
+
+<script>
+  import '../../../scripts/calendar';
+</script>

@@ -1,0 +1,101 @@
+/* =============================================================================
+   Agri Sathi — Design Tokens
+   -----------------------------------------------------------------------------
+   This is the SINGLE SOURCE OF TRUTH for the app's visual design.
+   To re-theme the app, change values here only. See THEME.md for guidance.
+
+   Design intent (v1 "Field" theme):
+   - Calm, earthy, high-contrast. Readable in bright sunlight on a cheap screen.
+   - Large tap targets, generous text sizes (farmer may be older / low vision).
+   - Green = growth/go, amber = caution/attention, red = danger/stop.
+   ========================================================================== */
+
+:root {
+  /* ---- Brand & semantic colors -------------------------------------------- */
+  --color-brand: #1f7a3d;          /* primary green */
+  --color-brand-dark: #145c2c;
+  --color-brand-light: #e3f1e6;
+  --color-accent: #c76a00;         /* harvest amber (links, highlights) */
+
+  --color-caution: #b26a00;        /* "watch for" / attention */
+  --color-caution-bg: #fdf1dd;
+  --color-danger: #b3261e;         /* pest outbreak / do-not */
+  --color-danger-bg: #fbe9e7;
+  --color-ok: #1f7a3d;
+  --color-ok-bg: #e3f1e6;
+  --color-info: #1256a0;
+  --color-info-bg: #e4eefb;
+
+  /* ---- Surfaces & text -------------------------------------------------- */
+  --color-bg: #f7f5ef;             /* warm paper */
+  --color-surface: #ffffff;
+  --color-surface-2: #f0ede3;
+  --color-border: #d9d3c4;
+  --color-text: #1c1a15;           /* near-black, warm */
+  --color-text-soft: #4d4838;
+  --color-text-invert: #ffffff;
+
+  /* ---- Season accent chips -------------------------------------------- */
+  --color-kharif: #2e7d32;         /* monsoon */
+  --color-rabi: #6a4bb0;           /* winter */
+  --color-zaid: #c76a00;           /* summer */
+
+  /* ---- Typography ------------------------------------------------------ */
+  --font-sans: "Noto Sans", "Noto Sans Devanagari", system-ui, -apple-system,
+    "Segoe UI", Roboto, sans-serif;
+  --font-hi: "Noto Sans Devanagari", "Noto Sans", system-ui, sans-serif;
+
+  --text-xs: 0.8125rem;   /* 13px */
+  --text-sm: 0.9375rem;   /* 15px */
+  --text-base: 1.0625rem; /* 17px — larger base for field readability */
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 1.9375rem;
+  --text-3xl: 2.5rem;
+
+  --leading-tight: 1.25;
+  --leading-normal: 1.6;
+
+  --weight-normal: 400;
+  --weight-medium: 600;
+  --weight-bold: 800;
+
+  /* ---- Spacing (4px base) -------------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-8: 3rem;
+
+  /* ---- Radius / shadow / layout ------------------------------------- */
+  --radius-sm: 6px;
+  --radius: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(28, 26, 21, 0.08);
+  --shadow: 0 2px 10px rgba(28, 26, 21, 0.10);
+  --shadow-lg: 0 8px 28px rgba(28, 26, 21, 0.16);
+
+  --tap-target: 48px;              /* minimum interactive size */
+  --content-max: 44rem;
+  --wide-max: 68rem;
+
+  --focus-ring: 3px solid #1256a0;
+}
+
+/* Optional dark theme — enabled only if the app opts in later.
+   Kept here so a re-theme can switch it on without restructuring. */
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="auto"] {
+    --color-bg: #14130f;
+    --color-surface: #1e1c17;
+    --color-surface-2: #26241d;
+    --color-border: #3a362b;
+    --color-text: #f2efe6;
+    --color-text-soft: #c4bda9;
+    --color-brand-light: #16351f;
+  }
+}

@@ -1,0 +1,79 @@
+---
+import { useTranslations, pick, type Locale } from '../i18n/utils';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  locale: Locale;
+  item: CollectionEntry<'crops'>['data']['pests'][number];
+  kind: 'pest' | 'disease';
+}
+const { locale, item, kind } = Astro.props;
+const t = useTranslations(locale);
+const lines = (field: { en: string[]; hi?: string[] }) => pick(field, locale) ?? field.en;
+const ipm = lines(item.ipm);
+const chemical = lines(item.chemical);
+---
+
+<details class="pest">
+  <summary>
+    <span class="pest__tag">{kind === 'disease' ? t('pest.disease') : t('pest.pest')}</span>
+    <span class="pest__name">{pick(item.name, locale)}</span>
+  </summary>
+  <div class="pest__body stack-sm">
+    <p><strong>{t('pest.identify')}:</strong> {pick(item.identify, locale)}</p>
+    <p><strong>{t('pest.damage')}:</strong> {pick(item.damage, locale)}</p>
+
+    {ipm.length > 0 && (
+      <div>
+        <p class="pest__label pest__label--ok">{t('pest.ipm')}</p>
+        <ul>{ipm.map((x) => <li>{x}</li>)}</ul>
+      </div>
+    )}
+
+    {chemical.length > 0 && (
+      <div>
+        <p class="pest__label pest__label--warn">{t('pest.chemical')}</p>
+        <ul>{chemical.map((x) => <li>{x}</li>)}</ul>
+      </div>
+    )}
+
+    {item.note && <p class="callout callout--caution">{pick(item.note, locale)}</p>}
+  </div>
+</details>
+
+<style>
+  .pest {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    overflow: hidden;
+  }
+  .pest + .pest { margin-top: var(--space-2); }
+  .pest summary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3);
+    min-height: var(--tap-target);
+    cursor: pointer;
+    font-weight: var(--weight-medium);
+    list-style: none;
+  }
+  .pest summary::-webkit-details-marker { display: none; }
+  .pest summary::after { content: '⌄'; margin-left: auto; font-size: 1.25rem; color: var(--color-text-soft); }
+  .pest[open] summary::after { content: '⌃'; }
+  .pest__tag {
+    font-size: var(--text-xs);
+    background: var(--color-danger-bg);
+    color: var(--color-danger);
+    padding: 2px var(--space-2);
+    border-radius: var(--radius-pill);
+  }
+  .pest__name { font-size: var(--text-base); }
+  .pest__body { padding: 0 var(--space-3) var(--space-3); font-size: var(--text-sm); }
+  .pest__body ul { padding-left: 1.25rem; margin-top: var(--space-1); }
+  .pest__body li { margin-block: var(--space-1); }
+  .pest__label { font-weight: var(--weight-bold); margin-top: var(--space-1); }
+  .pest__label--ok { color: var(--color-ok); }
+  .pest__label--warn { color: var(--color-caution); }
+</style>

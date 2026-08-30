@@ -1,0 +1,67 @@
+---
+import { useTranslations, type Locale } from '../i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<aside class="disclaimer" data-disclaimer hidden>
+  <div class="container-wide disclaimer__inner">
+    <p>
+      <strong>{t('disclaimer.title')}.</strong>
+      {t('disclaimer.text')}
+    </p>
+    <button type="button" data-disclaimer-dismiss>{t('disclaimer.gotIt')}</button>
+  </div>
+</aside>
+
+<style>
+  .disclaimer {
+    background: var(--color-caution-bg);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-caution) 30%, transparent);
+    font-size: var(--text-sm);
+  }
+  .disclaimer__inner {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+  }
+  .disclaimer p { color: #5a3d00; }
+  .disclaimer button {
+    flex-shrink: 0;
+    min-height: 40px;
+    padding-inline: var(--space-3);
+    border: 2px solid var(--color-caution);
+    background: transparent;
+    color: #5a3d00;
+    border-radius: var(--radius-pill);
+    font-weight: var(--weight-medium);
+    cursor: pointer;
+  }
+</style>
+
+<script>
+  const KEY = 'agri-sathi:disclaimer-ack:v1';
+  const el = document.querySelector<HTMLElement>('[data-disclaimer]');
+  if (el) {
+    let acknowledged = false;
+    try {
+      acknowledged = localStorage.getItem(KEY) === '1';
+    } catch {
+      /* storage blocked — show the banner every time, which is the safe default */
+    }
+    el.hidden = acknowledged;
+    el.querySelector('[data-disclaimer-dismiss]')?.addEventListener('click', () => {
+      el.hidden = true;
+      try {
+        localStorage.setItem(KEY, '1');
+      } catch {
+        /* ignore */
+      }
+    });
+  }
+</script>

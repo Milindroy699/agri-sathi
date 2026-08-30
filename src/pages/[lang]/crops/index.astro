@@ -1,0 +1,65 @@
+---
+import Base from '../../../layouts/Base.astro';
+import CropCard from '../../../components/CropCard.astro';
+import CropSearch from '../../../components/CropSearch.astro';
+import { localePaths } from '../../../i18n/routing';
+import { useTranslations, type Locale } from '../../../i18n/utils';
+import { getCropIndex } from '../../../lib/content';
+
+export const getStaticPaths = localePaths;
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+const crops = await getCropIndex(locale);
+
+const categories: Record<string, string> = {
+  cereal: locale === 'hi' ? 'अनाज' : 'Cereals',
+  pulse: locale === 'hi' ? 'दलहन' : 'Pulses',
+  oilseed: locale === 'hi' ? 'तिलहन' : 'Oilseeds',
+  fibre: locale === 'hi' ? 'रेशा' : 'Fibre',
+  sugar: locale === 'hi' ? 'शर्करा' : 'Sugar',
+  vegetable: locale === 'hi' ? 'सब्ज़ी' : 'Vegetables',
+  other: locale === 'hi' ? 'अन्य' : 'Other',
+};
+
+const grouped = crops.reduce<Record<string, typeof crops>>((acc, crop) => {
+  (acc[crop.category] ??= []).push(crop);
+  return acc;
+}, {});
+const orderedCats = Object.keys(categories).filter((c) => grouped[c]?.length);
+---
+
+<Base locale={locale} title={t('nav.crops')} description={t('home.heroText')}>
+  <h1>{t('nav.crops')}</h1>
+  <div class="mt">
+    <CropSearch locale={locale} />
+  </div>
+
+  {orderedCats.map((cat) => (
+    <section class="mt-lg">
+      <h2>{categories[cat]}</h2>
+      <div class="crop-grid mt">
+        {grouped[cat].map((crop) => (
+          <CropCard
+            locale={locale}
+            slug={crop.slug}
+            name={crop.name}
+            botanicalName={crop.botanicalName}
+            emoji={crop.emoji}
+            seasons={crop.seasons}
+            duration={crop.duration}
+          />
+        ))}
+      </div>
+    </section>
+  ))}
+</Base>
+
+<style>
+  h1 { margin-block: var(--space-5) 0; color: var(--color-brand-dark); }
+  .mt { margin-top: var(--space-4); }
+  .mt-lg { margin-top: var(--space-6); }
+  .crop-grid { display: grid; gap: var(--space-3); }
+  @media (min-width: 40rem) { .crop-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 60rem) { .crop-grid { grid-template-columns: repeat(3, 1fr); } }
+</style>

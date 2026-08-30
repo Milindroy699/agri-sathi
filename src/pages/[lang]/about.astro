@@ -1,0 +1,53 @@
+---
+import Base from '../../layouts/Base.astro';
+import { localePaths } from '../../i18n/routing';
+import { useTranslations, type Locale } from '../../i18n/utils';
+import { getCrops } from '../../lib/content';
+
+export const getStaticPaths = localePaths;
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+const crops = await getCrops();
+const allSources = [...new Set(crops.flatMap((c) => c.data.sources))].sort();
+---
+
+<Base locale={locale} title={t('about.title')}>
+  <article class="stack-lg">
+    <h1>{t('about.title')}</h1>
+
+    <section class="stack-sm">
+      <h2>{t('about.mission')}</h2>
+      <p>{t('about.missionText')}</p>
+    </section>
+
+    <section class="stack-sm">
+      <h2>{t('about.offline')}</h2>
+      <p>{t('about.offlineText')}</p>
+    </section>
+
+    <section class="stack-sm">
+      <h2>{t('about.sources')}</h2>
+      <p>{t('about.sourcesText')}</p>
+      <ul class="sources">
+        {allSources.map((s) => <li>{s}</li>)}
+      </ul>
+    </section>
+
+    <section class="stack-sm">
+      <h2>{t('about.corrections')}</h2>
+      <p>{t('about.correctionsText')}</p>
+    </section>
+
+    <section class="callout callout--caution">
+      <p><strong>{t('disclaimer.title')}.</strong> {t('disclaimer.text')}</p>
+    </section>
+  </article>
+</Base>
+
+<style>
+  h1 { margin-top: var(--space-5); color: var(--color-brand-dark); }
+  .sources { padding-left: 1.25rem; font-size: var(--text-sm); }
+  .sources li { margin-block: var(--space-1); }
+  article { margin-bottom: var(--space-8); }
+</style>

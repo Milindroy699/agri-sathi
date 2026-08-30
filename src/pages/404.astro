@@ -1,0 +1,25 @@
+---
+const base = import.meta.env.BASE_URL;
+const home = `${base}en/`.replace(/\/{2,}/g, '/');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Not found · Agri Sathi</title>
+    <style>
+      body { font-family: system-ui, sans-serif; display: grid; place-items: center; min-height: 100dvh; margin: 0; background: #f7f5ef; color: #1c1a15; text-align: center; padding: 1rem; }
+      a { color: #145c2c; font-weight: 600; }
+    </style>
+  </head>
+  <body>
+    <div>
+      <p style="font-size:3rem">🌾</p>
+      <h1>Page not found</h1>
+      <p>यह पृष्ठ नहीं मिला।</p>
+      <p><a href={home}>Agri Sathi — Home / मुख्य पृष्ठ</a></p>
+    </div>
+  </body>
+</html>

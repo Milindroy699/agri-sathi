@@ -1,0 +1,56 @@
+---
+import Base from '../../layouts/Base.astro';
+import { localePaths } from '../../i18n/routing';
+import { useTranslations, pick, type Locale } from '../../i18n/utils';
+import { getFaqs } from '../../lib/content';
+
+export const getStaticPaths = localePaths;
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+const faqs = await getFaqs();
+
+const topicLabel: Record<string, string> = {
+  general: locale === 'hi' ? 'सामान्य' : 'General',
+  soil: locale === 'hi' ? 'मिट्टी' : 'Soil',
+  water: locale === 'hi' ? 'पानी' : 'Water',
+  nutrition: locale === 'hi' ? 'खाद' : 'Nutrition',
+  pest: locale === 'hi' ? 'कीट' : 'Pest',
+  seed: locale === 'hi' ? 'बीज' : 'Seed',
+  weather: locale === 'hi' ? 'मौसम' : 'Weather',
+  scheme: locale === 'hi' ? 'योजना' : 'Scheme',
+};
+---
+
+<Base locale={locale} title={t('nav.faq')}>
+  <h1>{t('nav.faq')}</h1>
+  <div class="faq stack-sm">
+    {faqs.map((entry) => (
+      <details class="card">
+        <summary>
+          <span class="faq__q">{pick(entry.data.question, locale)}</span>
+          <span class="chip">{topicLabel[entry.data.topic]}</span>
+        </summary>
+        <p>{pick(entry.data.answer, locale)}</p>
+      </details>
+    ))}
+  </div>
+</Base>
+
+<style>
+  h1 { margin-block: var(--space-5) var(--space-4); color: var(--color-brand-dark); }
+  .faq summary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    cursor: pointer;
+    list-style: none;
+    min-height: var(--tap-target);
+    font-weight: var(--weight-medium);
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq__q { flex: 1; }
+  .faq summary::after { content: '⌄'; font-size: 1.25rem; color: var(--color-text-soft); }
+  .faq details[open] summary::after { content: '⌃'; }
+  .faq p { margin-top: var(--space-2); font-size: var(--text-sm); }
+</style>

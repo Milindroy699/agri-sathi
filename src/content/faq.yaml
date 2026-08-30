@@ -1,0 +1,182 @@
+# Agri Sathi FAQ — common farmer questions, plain answers in English + Hindi.
+# `order` controls display order (low first). `topic` groups the question.
+
+- id: how-much-urea
+  order: 10
+  topic: nutrition
+  question:
+    en: "How much urea should I put per acre?"
+    hi: "मुझे प्रति एकड़ कितना यूरिया डालना चाहिए?"
+  answer:
+    en: "It depends on the crop and your soil, not a fixed number. Start from the crop's recommended nitrogen (shown on each crop's Nutrition tab), split it into 2–3 doses, and use the Calculator on this app to convert it to urea bags for your field size. Then reduce it if your Soil Health Card shows good organic carbon or if you grew a pulse or green manure before. Putting all the urea at once, or adding extra 'to be safe', wastes money and causes lodging and pest attack."
+    hi: "यह फसल और आपकी मिट्टी पर निर्भर करता है, कोई तय संख्या नहीं। फसल की अनुशंसित नाइट्रोजन से शुरू करें (हर फसल के पोषण टैब में दिखाई गई), इसे 2–3 खुराक में बाँटें, और इस ऐप के कैलकुलेटर से इसे अपने खेत के आकार हेतु यूरिया बैग में बदलें। फिर घटाएँ यदि आपका मृदा स्वास्थ्य कार्ड अच्छा जैविक कार्बन दिखाता है या यदि आपने पहले दलहन या हरी खाद उगाई। सारा यूरिया एक साथ डालना, या 'सुरक्षा के लिए' अतिरिक्त डालना, पैसा गँवाता है और फसल गिरना तथा कीट हमला करता है।"
+
+- id: yellow-leaves
+  order: 20
+  topic: nutrition
+  question:
+    en: "My crop's leaves are turning yellow. What is wrong?"
+    hi: "मेरी फसल की पत्तियाँ पीली हो रही हैं। क्या समस्या है?"
+  answer:
+    en: "Look at WHICH leaves. Older, lower leaves yellowing first usually means nitrogen or sulphur shortage, or waterlogging. Young, top leaves yellow with green veins usually means iron or zinc shortage, common on high-pH soil. Yellow in bright mosaic patches spreading plant to plant is a virus — remove those plants. Whole field suddenly pale after heavy rain is often nitrogen washed out or roots short of air. Check the crop's Common Problems tab for the exact match."
+    hi: "देखें कौन सी पत्तियाँ। पहले पुरानी, निचली पत्तियाँ पीली होना आमतौर पर नाइट्रोजन या गंधक की कमी, या जलभराव दर्शाता है। हरी शिराओं वाली युवा, ऊपरी पत्तियाँ पीली होना आमतौर पर लोहा या जिंक की कमी, उच्च-pH मिट्टी पर आम। पौधे से पौधे फैलते चमकीले मोज़ेक धब्बों में पीलापन विषाणु है — वे पौधे हटाएँ। भारी बारिश के बाद पूरा खेत अचानक फीका अक्सर नाइट्रोजन बह जाना या जड़ों को हवा की कमी है। सटीक मिलान हेतु फसल का आम समस्याएँ टैब देखें।"
+
+- id: when-to-sow
+  order: 30
+  topic: seed
+  question:
+    en: "Does the sowing date really matter that much?"
+    hi: "क्या बुवाई की तारीख सचमुच इतनी मायने रखती है?"
+  answer:
+    en: "Yes — for many crops it is the single biggest free decision. Late wheat runs into hot April winds and loses grain weight. Late mustard meets the January aphid peak at flowering. Late soybean faces more whitefly and yellow mosaic virus. Early, on-time cotton can be ended before pink bollworm builds up. Sowing in the right 2–3 week window often matters more than an extra bag of fertiliser."
+    hi: "हाँ — कई फसलों के लिए यह सबसे बड़ा मुफ़्त फैसला है। देर से बोई गेहूँ अप्रैल की गर्म हवाओं में फँसती है और दाना वजन खोती है। देर से बोई सरसों फूल अवस्था में जनवरी माहू शिखर से मिलती है। देर से बोई सोयाबीन अधिक सफेद मक्खी और पीत रोग झेलती है। जल्दी, समय पर बोई कपास गुलाबी सुंडी बढ़ने से पहले समाप्त की जा सकती है। सही 2–3 सप्ताह की अवधि में बुवाई अक्सर एक अतिरिक्त बोरी खाद से अधिक मायने रखती है।"
+
+- id: pesticide-not-working
+  order: 40
+  topic: pest
+  question:
+    en: "I sprayed but the caterpillars/insects are still there. Why?"
+    hi: "मैंने छिड़काव किया पर सूँडियाँ/कीट अभी भी हैं। क्यों?"
+  answer:
+    en: "Common reasons: (1) the larvae were already large — sprays work best on eggs and small larvae, so scout early; (2) the same chemical group was used again and again and the pest is now resistant — rotate to a different group every spray; (3) the spray did not reach the target — bollworms and pod borers are inside pods, aphids are under leaves and at shoot tips, so aim there and use enough water; (4) sprayed in hot midday sun — spray in the evening. Repeating the same failed spray just adds cost and kills more natural enemies."
+    hi: "आम कारण: (1) सूँडियाँ पहले ही बड़ी थीं — छिड़काव अंडों और छोटी सूँडियों पर सबसे अच्छा काम करता है, इसलिए जल्दी निरीक्षण करें; (2) वही रासायनिक समूह बार-बार उपयोग हुआ और कीट अब प्रतिरोधी है — हर छिड़काव पर अलग समूह पर जाएँ; (3) छिड़काव लक्ष्य तक नहीं पहुँचा — सुंडियाँ फलियों के अंदर, माहू पत्तियों के नीचे और अंकुर सिरों पर, इसलिए वहाँ लक्ष्य करें और पर्याप्त पानी उपयोग करें; (4) दोपहर की तेज़ धूप में छिड़काव — शाम को छिड़कें। वही विफल छिड़काव दोहराना केवल लागत जोड़ता है और अधिक प्राकृतिक शत्रु मारता है।"
+
+- id: mix-pesticides
+  order: 50
+  topic: pest
+  question:
+    en: "Can I mix two or three pesticides in one spray to save time?"
+    hi: "क्या मैं समय बचाने के लिए एक छिड़काव में दो-तीन कीटनाशक मिला सकता हूँ?"
+  answer:
+    en: "Avoid it. Many mixes are not tested, some react and lose effect or burn the crop, and ready-made 'cocktails' push you to spray more chemical than the pest needs. Spray one recommended product for the actual pest that has crossed threshold. If you genuinely have two pests at once, ask your KVK which specific combination is safe."
+    hi: "इससे बचें। कई मिश्रण परखे नहीं हैं, कुछ प्रतिक्रिया करके प्रभाव खोते हैं या फसल जलाते हैं, और बने-बनाए 'कॉकटेल' आपको कीट की ज़रूरत से अधिक रसायन छिड़कने पर मजबूर करते हैं। सीमा पार करने वाले वास्तविक कीट के लिए एक अनुशंसित उत्पाद छिड़कें। यदि सचमुच एक साथ दो कीट हैं, तो अपने KVK से पूछें कि कौन सा विशिष्ट संयोजन सुरक्षित है।"
+
+- id: which-variety
+  order: 60
+  topic: seed
+  question:
+    en: "How do I choose which variety to grow?"
+    hi: "मैं कौन सी किस्म उगाऊँ, यह कैसे चुनूँ?"
+  answer:
+    en: "Match four things to your situation: (1) duration — it must mature before your weather turns bad or the next crop is due; (2) season and zone — use a variety released for your state; (3) disease resistance — pick resistance to whatever hits your area (yellow rust in wheat, wilt in gram, red rot in cane), and change variety when that resistance breaks down; (4) water — a drought-tolerant variety for rainfed land. Buy certified seed and note the variety name so you can compare next year."
+    hi: "चार चीज़ें अपनी स्थिति से मिलाएँ: (1) अवधि — यह आपके मौसम बिगड़ने या अगली फसल आने से पहले पकनी चाहिए; (2) ऋतु और क्षेत्र — अपने राज्य के लिए जारी किस्म उपयोग करें; (3) रोग प्रतिरोध — जो आपके क्षेत्र में लगता है उसका प्रतिरोध चुनें (गेहूँ में पीला रतुआ, चना में उकठा, गन्ने में लाल सड़न), और वह प्रतिरोध टूटने पर किस्म बदलें; (4) पानी — वर्षा आधारित भूमि हेतु सूखा-सहनशील किस्म। प्रमाणित बीज खरीदें और किस्म का नाम नोट करें ताकि अगले साल तुलना कर सकें।"
+
+- id: save-seed
+  order: 70
+  topic: seed
+  question:
+    en: "Can I keep my own seed from this year's crop?"
+    hi: "क्या मैं इस साल की फसल से अपना बीज रख सकता हूँ?"
+  answer:
+    en: "For self-pollinated crops — wheat, paddy, gram, soybean, mustard — yes, you can save seed for 3–4 years if you keep it from a healthy, pure, disease-free patch, clean and dry it well, and treat it before sowing. For HYBRIDS — most cotton, maize, bajra, and many vegetables — no: saved hybrid seed gives a weak, uneven, low-yield crop, so buy fresh each year."
+    hi: "स्व-परागित फसलों — गेहूँ, धान, चना, सोयाबीन, सरसों — के लिए हाँ, आप 3–4 साल बीज रख सकते हैं यदि इसे स्वस्थ, शुद्ध, रोग-मुक्त हिस्से से लें, अच्छी तरह साफ और सुखाएँ, और बुवाई से पहले उपचारित करें। हाइब्रिड — अधिकांश कपास, मक्का, बाजरा, और कई सब्ज़ियाँ — के लिए नहीं: रखा हाइब्रिड बीज कमज़ोर, असमान, कम-उपज फसल देता है, इसलिए हर साल ताज़ा खरीदें।"
+
+- id: how-often-irrigate
+  order: 80
+  topic: water
+  question:
+    en: "How often should I irrigate?"
+    hi: "मुझे कितनी बार सिंचाई करनी चाहिए?"
+  answer:
+    en: "By stage, not by calendar. Every crop has 2–3 stages where water must not be short — for wheat it is crown-root (21 days) and flowering; for maize it is tasseling and silking; for mustard it is the rosette stage and pod formation. Those are on each crop's Crop Cycle tab. Between those stages, irrigate when the top few centimetres of soil are dry and the crop is not wilting. Over-watering wastes water and invites root disease and lodging just as much as under-watering hurts."
+    hi: "अवस्था अनुसार, कैलेंडर अनुसार नहीं। हर फसल की 2–3 अवस्थाएँ होती हैं जहाँ पानी कम नहीं होना चाहिए — गेहूँ हेतु ताज-जड़ (21 दिन) और फूल; मक्का हेतु नर मंजरी और रेशम; सरसों हेतु रोज़ेट अवस्था और फली बनना। ये हर फसल के फसल चक्र टैब पर हैं। उन अवस्थाओं के बीच, तब सिंचाई करें जब ऊपरी कुछ सें.मी. मिट्टी सूखी हो और फसल मुरझा न रही हो। अधिक पानी पानी गँवाता है और जड़ रोग तथा फसल गिरना बुलाता है, उतना ही जितना कम पानी नुकसान करता है।"
+
+- id: soil-test-how
+  order: 90
+  topic: soil
+  question:
+    en: "How do I get my soil tested?"
+    hi: "मैं अपनी मिट्टी की जाँच कैसे कराऊँ?"
+  answer:
+    en: "Go to your nearest KVK, agriculture department office, or a Soil Testing Laboratory. Take a sample correctly: with a khurpi, take small slices of soil 15 cm deep from 8–10 spots across the field in a zig-zag, mix them in a clean bucket, and take about 500 g of that mix. Do it after harvest, before adding any fertiliser. You will get a Soil Health Card with a fertiliser recommendation. Repeat every 2–3 years."
+    hi: "अपने नज़दीकी KVK, कृषि विभाग कार्यालय, या मृदा परीक्षण प्रयोगशाला जाएँ। नमूना सही से लें: खुरपी से, खेत भर में ज़िग-ज़ैग में 8–10 जगहों से 15 सें.मी. गहरी मिट्टी की छोटी परतें लें, साफ बाल्टी में मिलाएँ, और उस मिश्रण का लगभग 500 ग्राम लें। कटाई के बाद, कोई खाद डालने से पहले करें। आपको खाद सिफारिश के साथ मृदा स्वास्थ्य कार्ड मिलेगा। हर 2–3 साल दोहराएँ।"
+
+- id: organic-switch
+  order: 100
+  topic: nutrition
+  question:
+    en: "Should I switch fully to organic farming?"
+    hi: "क्या मुझे पूरी तरह जैविक खेती पर जाना चाहिए?"
+  answer:
+    en: "Go step by step, not overnight. A sudden full switch usually drops yield for 2–3 years while the soil rebuilds. Start by cutting waste: get a soil test, use bio-fertilisers (Rhizobium, PSB, Azotobacter), add farmyard manure and compost, use green manure, and adopt IPM so you spray far less. Many farms then need only a small amount of chemical fertiliser at key stages. If you want certified organic for a premium market, plan the 3-year conversion with your KVK and line up the buyer first."
+    hi: "कदम-दर-कदम जाएँ, रातोंरात नहीं। अचानक पूर्ण बदलाव आमतौर पर 2–3 साल उपज घटाता है जबकि मिट्टी पुनर्निर्माण करती है। बर्बादी घटाकर शुरू करें: मिट्टी जाँच कराएँ, जैव-उर्वरक (राइज़ोबियम, PSB, एज़ोटोबैक्टर) उपयोग करें, गोबर खाद और कम्पोस्ट डालें, हरी खाद उपयोग करें, और IPM अपनाएँ ताकि बहुत कम छिड़काव हो। तब कई खेतों को मुख्य अवस्थाओं पर केवल थोड़ी रासायनिक खाद चाहिए। प्रीमियम बाज़ार हेतु प्रमाणित जैविक चाहिए तो अपने KVK के साथ 3-वर्षीय परिवर्तन योजना बनाएँ और पहले खरीदार तय करें।"
+
+- id: stubble-burning
+  order: 110
+  topic: soil
+  question:
+    en: "Why should I not burn crop stubble? It is quick and cheap."
+    hi: "मैं फसल की पराली क्यों न जलाऊँ? यह तेज़ और सस्ता है।"
+  answer:
+    en: "Burning destroys the organic matter, nitrogen and sulphur in the residue, kills earthworms and helpful soil life in the top layer, and hardens the soil — you pay for it later in more fertiliser and worse tilth. It is also banned in many states with fines. Instead: use a Happy Seeder or Super Seeder to sow through the residue, or spread Pusa decomposer to rot it into the soil in about 3 weeks, or bale it for fodder and industry."
+    hi: "जलाना अवशेष में मौजूद जैविक पदार्थ, नाइट्रोजन और गंधक नष्ट करता है, ऊपरी परत में केंचुए और उपयोगी मृदा जीवन मारता है, और मिट्टी सख़्त करता है — इसकी कीमत आप बाद में अधिक खाद और खराब जुताई में चुकाते हैं। यह कई राज्यों में जुर्माने के साथ प्रतिबंधित भी है। बजाय इसके: अवशेष के बीच बुवाई हेतु हैप्पी सीडर या सुपर सीडर उपयोग करें, या पूसा डीकम्पोज़र फैलाकर इसे लगभग 3 सप्ताह में मिट्टी में सड़ाएँ, या चारे और उद्योग हेतु गाँठ बनाएँ।"
+
+- id: kcc-loan
+  order: 120
+  topic: scheme
+  question:
+    en: "What is a Kisan Credit Card and how does it help?"
+    hi: "किसान क्रेडिट कार्ड क्या है और यह कैसे मदद करता है?"
+  answer:
+    en: "The Kisan Credit Card (KCC) is a bank facility that gives you a crop loan limit for seed, fertiliser and other input costs at a low interest rate (with interest subvention if repaid on time), plus a small amount for household and asset needs. Apply at your bank or through the PM-KISAN portal with your land records and ID. It is far cheaper than borrowing from an input dealer or moneylender."
+    hi: "किसान क्रेडिट कार्ड (KCC) एक बैंक सुविधा है जो बीज, खाद और अन्य इनपुट लागत हेतु कम ब्याज दर पर फसल ऋण सीमा देती है (समय पर चुकाने पर ब्याज छूट के साथ), साथ ही घरेलू और संपत्ति ज़रूरतों हेतु छोटी राशि। अपने बैंक में या PM-KISAN पोर्टल के माध्यम से अपने भूमि रिकॉर्ड और पहचान के साथ आवेदन करें। यह इनपुट डीलर या साहूकार से उधार लेने से बहुत सस्ता है।"
+
+- id: crop-insurance
+  order: 130
+  topic: scheme
+  question:
+    en: "Is crop insurance worth taking?"
+    hi: "क्या फसल बीमा लेना उचित है?"
+  answer:
+    en: "Under the Pradhan Mantri Fasal Bima Yojana (PMFBY) you pay a small share of the premium (2% of sum insured for kharif food and oilseed crops, 1.5% for rabi, 5% for commercial/horticulture) and the government pays the rest. It covers losses from drought, flood, pest, disease, hail and unseasonal rain. Enrol through your bank or CSC before the cut-off date and report any damage within 72 hours. It is most valuable in rainfed and disaster-prone areas."
+    hi: "प्रधानमंत्री फसल बीमा योजना (PMFBY) के तहत आप प्रीमियम का छोटा हिस्सा देते हैं (खरीफ खाद्य और तिलहन फसलों हेतु बीमित राशि का 2%, रबी हेतु 1.5%, व्यावसायिक/बागवानी हेतु 5%) और सरकार बाकी देती है। यह सूखा, बाढ़, कीट, रोग, ओला और बेमौसम बारिश से हानि कवर करता है। अंतिम तिथि से पहले अपने बैंक या CSC के माध्यम से नामांकन करें और किसी भी क्षति की सूचना 72 घंटे में दें। यह वर्षा आधारित और आपदा-प्रवण क्षेत्रों में सबसे मूल्यवान है।"
+
+- id: weather-forecast
+  order: 140
+  topic: weather
+  question:
+    en: "Where can I get a reliable weather forecast for farming?"
+    hi: "खेती के लिए भरोसेमंद मौसम पूर्वानुमान कहाँ मिलेगा?"
+  answer:
+    en: "The India Meteorological Department (IMD) runs a district and block-level Agromet Advisory issued twice a week (Tuesday and Friday) with a 5-day forecast and specific crop advice. Get it through the Meghdoot app, the Mausam app, your KVK, or a Kisan Suvidha message. Use it to time irrigation, spraying (never spray before rain or strong wind) and harvest."
+    hi: "भारत मौसम विज्ञान विभाग (IMD) ज़िला और ब्लॉक-स्तरीय कृषि-मौसम सलाह चलाता है जो सप्ताह में दो बार (मंगलवार और शुक्रवार) 5-दिन के पूर्वानुमान और विशिष्ट फसल सलाह के साथ जारी होती है। इसे मेघदूत ऐप, मौसम ऐप, अपने KVK, या किसान सुविधा संदेश से प्राप्त करें। इसका उपयोग सिंचाई, छिड़काव (बारिश या तेज़ हवा से पहले कभी छिड़काव न करें) और कटाई का समय तय करने में करें।"
+
+- id: fertiliser-timing
+  order: 150
+  topic: nutrition
+  question:
+    en: "Is it better to put all fertiliser at once or in parts?"
+    hi: "क्या सारी खाद एक साथ डालना बेहतर है या भागों में?"
+  answer:
+    en: "Phosphorus, potash and sulphur go fully as a basal dose at sowing, placed near the seed — they move little in the soil. Nitrogen must be split: a part at sowing and the rest as 2–3 top-dressings at the crop's key growth stages. Nitrogen given all at once is largely lost to air and water within weeks, feeds weeds, and makes the crop lush and lodging-prone early while leaving it starved later."
+    hi: "फॉस्फोरस, पोटाश और गंधक पूरी तरह बुवाई पर आधार खुराक के रूप में, बीज के पास रखें — ये मिट्टी में कम चलते हैं। नाइट्रोजन बाँटना ज़रूरी है: एक भाग बुवाई पर और बाकी फसल की मुख्य वृद्धि अवस्थाओं पर 2–3 ऊपरी खुराक के रूप में। एक साथ दी नाइट्रोजन सप्ताहों में हवा और पानी में काफ़ी हद तक नष्ट हो जाती है, खरपतवार पोषती है, और फसल को जल्दी हरा-भरा तथा गिरने-प्रवण बनाकर बाद में भूखा छोड़ देती है।"
+
+- id: too-much-rain
+  order: 160
+  topic: water
+  question:
+    en: "It has rained too much and water is standing in my field. What should I do?"
+    hi: "बहुत बारिश हो गई है और मेरे खेत में पानी खड़ा है। मुझे क्या करना चाहिए?"
+  answer:
+    en: "Drain it as fast as possible — open channels to the lowest corner; most crops (soybean, cotton, gram, maize) are badly damaged by even one day of standing water. Once drained, do not walk through or work the wet field — it spreads disease and compacts the soil. Wait for it to reach workable moisture, then break any crust, and give a light top-dress of nitrogen because rain washes it out. Watch closely for root rot and fungal blight over the next 10 days."
+    hi: "जितनी जल्दी हो सके निकालें — सबसे नीचे कोने तक नालियाँ खोलें; अधिकांश फसलें (सोयाबीन, कपास, चना, मक्का) एक दिन खड़े पानी से भी बुरी तरह क्षतिग्रस्त होती हैं। निकलने के बाद, गीले खेत में न चलें न काम करें — इससे रोग फैलता है और मिट्टी दबती है। इसके काम योग्य नमी तक पहुँचने की प्रतीक्षा करें, फिर कोई पपड़ी तोड़ें, और नाइट्रोजन का हल्का ऊपरी छिड़काव दें क्योंकि बारिश इसे बहा देती है। अगले 10 दिन जड़ सड़न और फफूँद अंगमारी के लिए बारीकी से देखें।"
+
+- id: offline-app
+  order: 170
+  topic: general
+  question:
+    en: "Does this app work without internet?"
+    hi: "क्या यह ऐप बिना इंटरनेट चलता है?"
+  answer:
+    en: "Yes. Open Agri Sathi once with an internet connection and it saves itself on your phone. After that the crop guides, crop cycle, pest pages, calculator and your saved calendars all work with no network. Tap 'Add to Home Screen' when your browser offers it, so it opens like an app. It updates itself the next time you open it with internet."
+    hi: "हाँ। एग्री साथी को एक बार इंटरनेट कनेक्शन के साथ खोलें और यह खुद को आपके फ़ोन में सेव कर लेता है। इसके बाद फसल जानकारी, फसल चक्र, कीट पृष्ठ, कैलकुलेटर और आपके सेव किए कैलेंडर सभी बिना नेटवर्क चलते हैं। जब आपका ब्राउज़र 'होम स्क्रीन पर जोड़ें' दिखाए तो टैप करें, ताकि यह ऐप की तरह खुले। यह अगली बार इंटरनेट के साथ खोलने पर खुद अपडेट हो जाता है।"
+
+- id: advice-accuracy
+  order: 180
+  topic: general
+  question:
+    en: "Can I fully rely on the doses and pesticide names in this app?"
+    hi: "क्या मैं इस ऐप में दी मात्राओं और कीटनाशक नामों पर पूरी तरह भरोसा कर सकता हूँ?"
+  answer:
+    en: "Treat this app as a well-organised starting point, not the final word. The guidance follows standard Package of Practices, but your soil, your local pest advisory this season, and the current approved label can all differ. Before you spend money on fertiliser or spray a pesticide, confirm the dose and product with your KVK or agriculture officer, and always read and follow the product label."
+    hi: "इस ऐप को एक सुव्यवस्थित शुरुआती बिंदु मानें, अंतिम शब्द नहीं। जानकारी मानक पैकेज ऑफ प्रैक्टिस पर आधारित है, पर आपकी मिट्टी, इस ऋतु की आपकी स्थानीय कीट सलाह, और वर्तमान स्वीकृत लेबल सभी भिन्न हो सकते हैं। खाद पर पैसा खर्च करने या कीटनाशक छिड़कने से पहले, मात्रा और उत्पाद अपने KVK या कृषि अधिकारी से पुष्टि करें, और हमेशा उत्पाद लेबल पढ़ें और पालन करें।"

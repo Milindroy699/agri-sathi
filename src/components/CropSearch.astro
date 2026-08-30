@@ -1,0 +1,163 @@
+---
+import { useTranslations, localizedPath, type Locale } from '../i18n/utils';
+import { getCropIndex } from '../lib/content';
+
+interface Props {
+  locale: Locale;
+  autofocus?: boolean;
+}
+const { locale, autofocus = false } = Astro.props;
+const t = useTranslations(locale);
+const base = import.meta.env.BASE_URL;
+const index = await getCropIndex(locale);
+const cropsBase = localizedPath(base, locale, 'crops/');
+---
+
+<search class="crop-search">
+  <label class="crop-search__label" for="crop-search-input">{t('home.searchLabel')}</label>
+  <div class="crop-search__field">
+    <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22">
+      <path
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        d="M20 20l-4.5-4.5M17 11a6 6 0 1 1-12 0 6 6 0 0 1 12 0Z"
+      />
+    </svg>
+    <input
+      id="crop-search-input"
+      type="search"
+      inputmode="search"
+      autocomplete="off"
+      placeholder={t('home.searchPlaceholder')}
+      aria-controls="crop-search-results"
+      autofocus={autofocus}
+    />
+  </div>
+  <ul id="crop-search-results" class="crop-search__results" role="listbox" hidden></ul>
+  <p class="crop-search__empty" hidden>{t('search.noResults')}</p>
+</search>
+
+<script
+  type="application/json"
+  id="crop-search-data"
+  set:html={JSON.stringify({ base: cropsBase, items: index })}
+/>
+
+<style>
+  .crop-search { display: block; position: relative; }
+  .crop-search__label {
+    display: block;
+    font-weight: var(--weight-medium);
+    margin-bottom: var(--space-2);
+  }
+  .crop-search__field {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding-inline: var(--space-3);
+    background: var(--color-surface);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    color: var(--color-text-soft);
+  }
+  .crop-search__field:focus-within { border-color: var(--color-brand); }
+  .crop-search__field input {
+    flex: 1;
+    min-height: var(--tap-target);
+    border: 0;
+    background: transparent;
+    outline: none;
+    font-size: var(--text-base);
+    color: var(--color-text);
+  }
+  .crop-search__results {
+    list-style: none;
+    margin: var(--space-2) 0 0;
+    padding: var(--space-1);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+  .crop-search__results li { margin: 0; }
+  .crop-search__results a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--tap-target);
+    padding: var(--space-2) var(--space-3);
+    text-decoration: none;
+    color: var(--color-text);
+    border-radius: var(--radius-sm);
+  }
+  .crop-search__results a:hover,
+  .crop-search__results a:focus-visible {
+    background: var(--color-brand-light);
+  }
+  .crop-search__results .emoji { font-size: 1.5rem; }
+  .crop-search__results .latin { font-size: var(--text-xs); color: var(--color-text-soft); font-style: italic; }
+  .crop-search__empty {
+    margin-top: var(--space-2);
+    color: var(--color-text-soft);
+    font-size: var(--text-sm);
+  }
+</style>
+
+<script>
+  interface Item {
+    slug: string;
+    name: string;
+    nameEn: string;
+    nameHi: string;
+    botanicalName: string;
+    emoji: string;
+  }
+
+  const dataEl = document.getElementById('crop-search-data');
+  if (dataEl?.textContent) {
+    const { base, items } = JSON.parse(dataEl.textContent) as { base: string; items: Item[] };
+    const input = document.getElementById('crop-search-input') as HTMLInputElement | null;
+    const list = document.getElementById('crop-search-results') as HTMLUListElement | null;
+    const empty = document.querySelector<HTMLElement>('.crop-search__empty');
+
+    const norm = (s: string) =>
+      s.toLowerCase().normalize('NFKD').replace(/\p{Diacritic}/gu, '');
+
+    function render(q: string) {
+      if (!list || !empty) return;
+      const query = norm(q.trim());
+      if (!query) {
+        list.hidden = true;
+        empty.hidden = true;
+        list.innerHTML = '';
+        return;
+      }
+      const hits = items
+        .filter((it) =>
+          [it.name, it.nameEn, it.nameHi, it.botanicalName].some((f) => norm(f).includes(query))
+        )
+        .slice(0, 8);
+
+      list.innerHTML = hits
+        .map(
+          (it) =>
+            `<li role="option"><a href="${base}${it.slug}/"><span class="emoji" aria-hidden="true">${it.emoji}</span><span><strong>${it.name}</strong><br><span class="latin">${it.botanicalName}</span></span></a></li>`
+        )
+        .join('');
+      list.hidden = hits.length === 0;
+      empty.hidden = hits.length !== 0;
+    }
+
+    input?.addEventListener('input', () => render(input.value));
+    document.addEventListener('click', (e) => {
+      if (list && !list.contains(e.target as Node) && e.target !== input) list.hidden = true;
+    });
+    input?.addEventListener('focus', () => {
+      if (input.value) render(input.value);
+    });
+  }
+</script>

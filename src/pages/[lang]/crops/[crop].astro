@@ -1,0 +1,290 @@
+---
+import Base from '../../../layouts/Base.astro';
+import StageTimeline from '../../../components/StageTimeline.astro';
+import NutritionTable from '../../../components/NutritionTable.astro';
+import PestCard from '../../../components/PestCard.astro';
+import { LOCALES, useTranslations, pick, localizedPath, type Locale } from '../../../i18n/utils';
+import { getCrops } from '../../../lib/content';
+import { render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const crops = await getCrops();
+  return LOCALES.flatMap((lang) =>
+    crops.map((crop) => ({
+      params: { lang, crop: crop.id },
+      props: { locale: lang as Locale, crop },
+    }))
+  );
+}
+
+const { locale, crop } = Astro.props;
+const t = useTranslations(locale);
+const base = import.meta.env.BASE_URL;
+const d = crop.data;
+const { Content } = await render(crop);
+
+const seasonLabel: Record<string, string> = {
+  kharif: locale === 'hi' ? 'खरीफ (मानसून)' : 'Kharif (monsoon)',
+  rabi: locale === 'hi' ? 'रबी (सर्दी)' : 'Rabi (winter)',
+  zaid: locale === 'hi' ? 'ज़ायद (गर्मी)' : 'Zaid (summer)',
+};
+
+const facts = [
+  { label: t('crop.botanicalName'), value: d.botanicalName, italic: true },
+  { label: t('crop.family'), value: pick(d.family, locale) },
+  { label: t('crop.season'), value: d.seasons.map((s) => seasonLabel[s]).join(', ') },
+  { label: t('crop.duration'), value: `${d.duration} ${t('crop.days')}` },
+  { label: t('crop.soil'), value: pick(d.soil, locale) },
+  { label: t('crop.climate'), value: pick(d.climate, locale) },
+  { label: t('crop.water'), value: pick(d.waterRequirement, locale) },
+  {
+    label: t('crop.seedRate'),
+    value: `${d.seedRate.value} ${d.seedRate.unit}${d.seedRate.method ? ' — ' + pick(d.seedRate.method, locale) : ''}`,
+  },
+  { label: t('crop.states'), value: d.majorStates.join(', ') },
+];
+
+const tabs = [
+  { id: 'overview', label: t('crop.overview') },
+  { id: 'cycle', label: t('crop.cycle') },
+  { id: 'nutrition', label: t('crop.nutrition') },
+  { id: 'pests', label: t('crop.pests') },
+  { id: 'problems', label: t('crop.problems') },
+].filter((tab) => {
+  if (tab.id === 'pests') return d.pests.length + d.diseases.length > 0;
+  if (tab.id === 'problems') return d.commonProblems.length > 0;
+  return true;
+});
+
+const reviewed = d.lastReviewed.toLocaleDateString(locale === 'hi' ? 'hi-IN' : 'en-IN', {
+  year: 'numeric',
+  month: 'short',
+});
+---
+
+<Base
+  locale={locale}
+  title={pick(d.name, locale) ?? d.name.en}
+  description={pick(d.climate, locale)}
+>
+  <p class="crumb">
+    <a href={localizedPath(base, locale, 'crops/')}>← {t('common.backToCrops')}</a>
+  </p>
+
+  <header class="crop-head">
+    <span class="crop-head__emoji" aria-hidden="true">{d.emoji}</span>
+    <div>
+      <h1>{pick(d.name, locale)}</h1>
+      <p class="crop-head__latin">{d.botanicalName}</p>
+      <p class="crop-head__seasons">
+        {d.seasons.map((s) => <span class={`chip chip--${s}`}>{seasonLabel[s]}</span>)}
+      </p>
+    </div>
+  </header>
+
+  <div class="crop-head__actions">
+    <a class="btn btn--ghost" href={`${localizedPath(base, locale, 'tools/calendar/')}?crop=${crop.id}`}>
+      📅 {t('crop.useInCalendar')}
+    </a>
+    <a class="btn btn--ghost" href={`${localizedPath(base, locale, 'tools/calculator/')}?crop=${crop.id}`}>
+      🧮 {t('crop.useInCalculator')}
+    </a>
+  </div>
+
+  <div class="tabs" data-tabs>
+    <div class="tabs__list" role="tablist" aria-label={pick(d.name, locale)}>
+      {tabs.map((tab, i) => (
+        <button
+          role="tab"
+          id={`tab-${tab.id}`}
+          aria-controls={`panel-${tab.id}`}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          tabindex={i === 0 ? '0' : '-1'}
+        >
+          {tab.label}
+        </button>
+      ))}
+    </div>
+
+    <section id="panel-overview" role="tabpanel" aria-labelledby="tab-overview" class="tabs__panel">
+      <div class="prose">
+        <Content />
+      </div>
+      <dl class="facts">
+        {facts.filter((f) => f.value).map((f) => (
+          <div>
+            <dt>{f.label}</dt>
+            <dd class={f.italic ? 'is-italic' : ''}>{f.value}</dd>
+          </div>
+        ))}
+      </dl>
+
+      {d.varieties.length > 0 && (
+        <>
+          <h2>{t('crop.varieties')}</h2>
+          <ul class="varieties">
+            {d.varieties.map((v) => (
+              <li>
+                <strong>{v.name}</strong>
+                {v.duration && <span class="chip">{v.duration} {t('crop.days')}</span>}
+                {v.region && <span class="chip">{v.region}</span>}
+                {v.notes && <p>{pick(v.notes, locale)}</p>}
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+    </section>
+
+    <section id="panel-cycle" role="tabpanel" aria-labelledby="tab-cycle" class="tabs__panel" hidden>
+      <StageTimeline locale={locale} stages={d.calendar.stages} basis={d.calendar.basis} />
+    </section>
+
+    <section id="panel-nutrition" role="tabpanel" aria-labelledby="tab-nutrition" class="tabs__panel" hidden>
+      <NutritionTable locale={locale} nutrition={d.nutrition} />
+      <p class="callout callout--caution mt">{t('calc.disclaimerShort')}</p>
+    </section>
+
+    {(d.pests.length + d.diseases.length > 0) && (
+      <section id="panel-pests" role="tabpanel" aria-labelledby="tab-pests" class="tabs__panel" hidden>
+        <div class="stack-sm">
+          {d.pests.map((item) => <PestCard locale={locale} item={item} kind="pest" />)}
+          {d.diseases.map((item) => <PestCard locale={locale} item={item} kind="disease" />)}
+        </div>
+        <p class="callout callout--danger mt">{t('disclaimer.text')}</p>
+      </section>
+    )}
+
+    {d.commonProblems.length > 0 && (
+      <section id="panel-problems" role="tabpanel" aria-labelledby="tab-problems" class="tabs__panel" hidden>
+        <div class="stack-sm">
+          {d.commonProblems.map((p) => (
+            <div class="card">
+              <p><strong>{pick(p.symptom, locale)}</strong></p>
+              <p class="soft">→ {pick(p.likelyCause, locale)}</p>
+              <p>✅ {pick(p.action, locale)}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+
+  <footer class="crop-sources">
+    <p><strong>{t('common.sources')}:</strong> {d.sources.join('; ')}</p>
+    <p class="soft">{t('about.lastReviewed')}: {reviewed}{d.reviewedBy ? ` · ${t('about.reviewedBy')}: ${d.reviewedBy}` : ''}</p>
+  </footer>
+</Base>
+
+<style>
+  .crumb { margin-block: var(--space-4) var(--space-2); }
+  .crumb a { text-decoration: none; font-weight: var(--weight-medium); }
+
+  .crop-head { display: flex; gap: var(--space-3); align-items: flex-start; }
+  .crop-head__emoji { font-size: 3rem; line-height: 1; }
+  .crop-head h1 { color: var(--color-brand-dark); }
+  .crop-head__latin { font-style: italic; color: var(--color-text-soft); }
+  .crop-head__seasons { display: flex; flex-wrap: wrap; gap: var(--space-1); margin-top: var(--space-2); }
+
+  .crop-head__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-block: var(--space-4);
+  }
+  .crop-head__actions .btn { font-size: var(--text-sm); }
+
+  .tabs__list {
+    display: flex;
+    gap: var(--space-1);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-bottom: 2px solid var(--color-border);
+    margin-bottom: var(--space-4);
+  }
+  .tabs__list button {
+    flex-shrink: 0;
+    min-height: var(--tap-target);
+    padding: var(--space-2) var(--space-4);
+    border: 0;
+    background: transparent;
+    font-weight: var(--weight-medium);
+    color: var(--color-text-soft);
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    cursor: pointer;
+  }
+  .tabs__list button[aria-selected='true'] {
+    color: var(--color-brand-dark);
+    border-bottom-color: var(--color-brand);
+  }
+
+  .facts { display: grid; gap: var(--space-2); margin-block: var(--space-4); }
+  .facts div {
+    display: grid;
+    grid-template-columns: 40% 1fr;
+    gap: var(--space-2);
+    padding: var(--space-2);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+  }
+  .facts dt { font-weight: var(--weight-medium); color: var(--color-text-soft); font-size: var(--text-sm); }
+  .facts dd { margin: 0; }
+  .facts .is-italic { font-style: italic; }
+
+  .varieties { list-style: none; padding: 0; display: grid; gap: var(--space-2); }
+  .varieties li {
+    padding: var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+  }
+  .varieties li strong { margin-right: var(--space-2); }
+  .varieties li p { font-size: var(--text-sm); color: var(--color-text-soft); margin-top: var(--space-1); }
+
+  .prose :global(p) { margin-block: var(--space-2); }
+  .prose :global(h2) { margin-top: var(--space-4); }
+
+  .soft { color: var(--color-text-soft); }
+  .mt { margin-top: var(--space-4); }
+
+  .crop-sources {
+    margin-top: var(--space-6);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+    font-size: var(--text-sm);
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((root) => {
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
+
+    function select(index: number) {
+      tabs.forEach((tab, i) => {
+        const active = i === index;
+        tab.setAttribute('aria-selected', String(active));
+        tab.tabIndex = active ? 0 : -1;
+        panels[i].hidden = !active;
+      });
+    }
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => select(i));
+      tab.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+          e.preventDefault();
+          const next = (i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length;
+          tabs[next].focus();
+          select(next);
+        }
+      });
+    });
+
+    const hash = location.hash.replace('#panel-', '');
+    const initial = tabs.findIndex((t) => t.id === `tab-${hash}`);
+    if (initial > 0) select(initial);
+  });
+</script>

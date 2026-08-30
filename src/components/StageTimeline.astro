@@ -1,0 +1,108 @@
+---
+import { useTranslations, pick, type Locale } from '../i18n/utils';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  locale: Locale;
+  stages: CollectionEntry<'crops'>['data']['calendar']['stages'];
+  basis: 'sowing' | 'transplant';
+}
+const { locale, stages, basis } = Astro.props;
+const t = useTranslations(locale);
+const lines = (field: { en: string[]; hi?: string[] }) => pick(field, locale) ?? field.en;
+const basisLabel =
+  basis === 'transplant'
+    ? locale === 'hi'
+      ? 'रोपाई के बाद'
+      : 'after transplant'
+    : locale === 'hi'
+      ? 'बुवाई के बाद'
+      : 'after sowing';
+---
+
+<ol class="timeline">
+  {stages.map((stage, i) => (
+    <li class="timeline__item">
+      <div class="timeline__marker" aria-hidden="true">{i + 1}</div>
+      <div class="timeline__content card">
+        <p class="timeline__day">
+          {t('stage.day')} {stage.startDap}–{stage.endDap} {basisLabel}
+        </p>
+        <h3>{pick(stage.name, locale)}</h3>
+
+        {stage.irrigation && (
+          <p class="timeline__irrigation">💧 {pick(stage.irrigation, locale)}</p>
+        )}
+
+        <p class="timeline__label">{t('stage.tasks')}</p>
+        <ul class="timeline__list">
+          {lines(stage.tasks).map((task) => <li>{task}</li>)}
+        </ul>
+
+        {lines(stage.watchFor).length > 0 && (
+          <>
+            <p class="timeline__label timeline__label--warn">{t('stage.watchFor')}</p>
+            <ul class="timeline__list timeline__list--warn">
+              {lines(stage.watchFor).map((w) => <li>{w}</li>)}
+            </ul>
+          </>
+        )}
+      </div>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .timeline { list-style: none; margin: 0; padding: 0; position: relative; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 12px;
+    bottom: 12px;
+    width: 2px;
+    background: var(--color-border);
+  }
+  .timeline__item {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: var(--space-3);
+    margin: 0;
+  }
+  .timeline__item + .timeline__item { margin-top: var(--space-3); }
+  .timeline__marker {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--color-brand);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-weight: var(--weight-bold);
+    z-index: 1;
+  }
+  .timeline__content { margin-bottom: var(--space-1); }
+  .timeline__day {
+    font-size: var(--text-xs);
+    color: var(--color-text-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .timeline__content h3 { margin-block: var(--space-1) var(--space-2); }
+  .timeline__irrigation {
+    font-size: var(--text-sm);
+    background: var(--color-info-bg);
+    border-radius: var(--radius-sm);
+    padding: var(--space-1) var(--space-2);
+    margin-bottom: var(--space-2);
+  }
+  .timeline__label {
+    font-weight: var(--weight-medium);
+    font-size: var(--text-sm);
+    margin-top: var(--space-2);
+  }
+  .timeline__label--warn { color: var(--color-caution); }
+  .timeline__list { margin: var(--space-1) 0 0; padding-left: 1.25rem; }
+  .timeline__list li { margin-block: var(--space-1); }
+  .timeline__list--warn li::marker { color: var(--color-caution); }
+</style>

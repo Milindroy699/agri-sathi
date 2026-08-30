@@ -1,0 +1,136 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { localePaths } from '../../../i18n/routing';
+import { useTranslations, type Locale } from '../../../i18n/utils';
+import { getToolData } from '../../../lib/content';
+
+export const getStaticPaths = localePaths;
+
+const { locale } = Astro.props as { locale: Locale };
+const t = useTranslations(locale);
+const crops = await getToolData(locale);
+
+// 1 bigha in square metres — regional presets. Bigha is not standardised;
+// these are widely-cited values and the UI tells the farmer to confirm locally.
+const bighaPresets = [
+  { id: 'up', label: locale === 'hi' ? 'उत्तर प्रदेश (पक्का)' : 'Uttar Pradesh (pakka)', sqm: 2529 },
+  { id: 'rj-pakka', label: locale === 'hi' ? 'राजस्थान (पक्का)' : 'Rajasthan (pakka)', sqm: 2529 },
+  { id: 'rj-kaccha', label: locale === 'hi' ? 'राजस्थान (कच्चा)' : 'Rajasthan (kaccha)', sqm: 1618 },
+  { id: 'bihar', label: locale === 'hi' ? 'बिहार / झारखंड' : 'Bihar / Jharkhand', sqm: 2529 },
+  { id: 'wb', label: locale === 'hi' ? 'पश्चिम बंगाल' : 'West Bengal', sqm: 1338 },
+  { id: 'mp', label: locale === 'hi' ? 'मध्य प्रदेश' : 'Madhya Pradesh', sqm: 1112 },
+  { id: 'gj', label: locale === 'hi' ? 'गुजरात' : 'Gujarat', sqm: 1618 },
+  { id: 'pb-hr', label: locale === 'hi' ? 'पंजाब / हरियाणा' : 'Punjab / Haryana', sqm: 843 },
+];
+
+const strings = {
+  results: t('calc.results'),
+  seed: t('calc.seed'),
+  fertiliser: t('calc.fertiliser'),
+  straight: t('calc.straightFertiliser'),
+  urea: t('calc.urea'),
+  dap: t('calc.dap'),
+  mop: t('calc.mop'),
+  bags: t('calc.bags'),
+  kg: t('calc.kg'),
+  bagNote: t('calc.bagNote'),
+  sprayWater: t('calc.sprayWater'),
+  litres: t('calc.litres'),
+  splitByStage: t('calc.splitByStage'),
+  stage: t('nutrition.stage'),
+  timing: t('nutrition.timing'),
+  disclaimer: t('calc.disclaimerShort'),
+  locale: locale === 'hi' ? 'hi-IN' : 'en-IN',
+};
+---
+
+<Base locale={locale} title={t('calc.title')} description={t('calc.intro')}>
+  <h1>{t('calc.title')}</h1>
+  <p class="lead">{t('calc.intro')}</p>
+
+  <form class="calc-form card" data-calc-form>
+    <div class="field">
+      <label for="calc-crop">{t('calc.crop')}</label>
+      <select id="calc-crop" name="crop" required>
+        <option value="" disabled selected>—</option>
+        {crops.map((crop) => <option value={crop.id}>{crop.emoji} {crop.name}</option>)}
+      </select>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label for="calc-area">{t('calc.area')}</label>
+        <input id="calc-area" name="area" type="number" min="0" step="0.05" inputmode="decimal" required />
+      </div>
+      <div class="field">
+        <label for="calc-unit">{t('calc.unit')}</label>
+        <select id="calc-unit" name="unit">
+          <option value="acre">{t('calc.unit.acre')}</option>
+          <option value="hectare">{t('calc.unit.hectare')}</option>
+          <option value="bigha">{t('calc.unit.bigha')}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field" data-bigha hidden>
+      <label for="calc-bigha">{t('calc.bighaRegion')}</label>
+      <select id="calc-bigha" name="bigha">
+        {bighaPresets.map((preset) => <option value={preset.sqm}>{preset.label}</option>)}
+      </select>
+    </div>
+
+    <button class="btn btn--block" type="submit">{t('calc.calculate')}</button>
+  </form>
+
+  <section data-calc-output hidden class="stack">
+    <h2 data-calc-title></h2>
+    <div class="result-grid" data-calc-results></div>
+    <div data-calc-split></div>
+    <p class="callout callout--caution">{t('calc.disclaimerShort')}</p>
+  </section>
+</Base>
+
+<script type="application/json" id="calc-crops" set:html={JSON.stringify(crops)} />
+<script type="application/json" id="calc-strings" set:html={JSON.stringify(strings)} />
+
+<style>
+  h1 { margin-block: var(--space-5) var(--space-2); color: var(--color-brand-dark); }
+  .lead { color: var(--color-text-soft); margin-bottom: var(--space-4); }
+  .calc-form { display: grid; gap: var(--space-4); }
+  .row { display: grid; grid-template-columns: 1fr 8rem; gap: var(--space-3); }
+  .field { display: grid; gap: var(--space-2); }
+  .field label { font-weight: var(--weight-medium); }
+  .field select,
+  .field input {
+    min-height: var(--tap-target);
+    padding-inline: var(--space-3);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    font-size: var(--text-base);
+  }
+  .field select:focus,
+  .field input:focus { outline: none; border-color: var(--color-brand); }
+
+  section[data-calc-output] { margin-top: var(--space-6); }
+  section[data-calc-output] h2 { color: var(--color-brand-dark); }
+  .result-grid { display: grid; gap: var(--space-3); }
+  .result-card {
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+  }
+  .result-card h3 { font-size: var(--text-base); color: var(--color-text-soft); }
+  .result-card .big { font-size: var(--text-2xl); font-weight: var(--weight-bold); color: var(--color-brand-dark); }
+  .result-card .sub { font-size: var(--text-sm); color: var(--color-text-soft); }
+  .table-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: var(--text-sm); min-width: 26rem; }
+  th, td { text-align: left; padding: var(--space-2); border-bottom: 1px solid var(--color-border); }
+  th { background: var(--color-surface-2); }
+  @media (min-width: 40rem) { .result-grid { grid-template-columns: repeat(2, 1fr); } }
+</style>
+
+<script>
+  import '../../../scripts/calculator';
+</script>

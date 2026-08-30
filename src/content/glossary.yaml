@@ -1,0 +1,200 @@
+# Agri Sathi glossary — plain-language farm terms in English + Hindi.
+# Add new terms anywhere; they are sorted alphabetically at build time.
+
+- id: kharif
+  term: { en: "Kharif", hi: "खरीफ" }
+  definition:
+    en: "The monsoon cropping season. Crops are sown June–July with the rains and harvested September–October. Rice, cotton, maize, soybean and pigeon pea are kharif crops."
+    hi: "मानसून की फसल ऋतु। फसलें जून–जुलाई में बारिश के साथ बोई और सितंबर–अक्टूबर में काटी जाती हैं। धान, कपास, मक्का, सोयाबीन और अरहर खरीफ फसलें हैं।"
+
+- id: rabi
+  term: { en: "Rabi", hi: "रबी" }
+  definition:
+    en: "The winter cropping season. Crops are sown October–November on residual moisture or irrigation and harvested March–April. Wheat, mustard, gram and barley are rabi crops."
+    hi: "सर्दी की फसल ऋतु। फसलें अक्टूबर–नवंबर में बची नमी या सिंचाई पर बोई और मार्च–अप्रैल में काटी जाती हैं। गेहूँ, सरसों, चना और जौ रबी फसलें हैं।"
+
+- id: zaid
+  term: { en: "Zaid", hi: "ज़ायद" }
+  definition:
+    en: "The short summer season between rabi and kharif (March–June), used for irrigated crops like moong, watermelon, cucumber and fodder maize."
+    hi: "रबी और खरीफ के बीच की छोटी गर्मी ऋतु (मार्च–जून), जिसमें मूँग, तरबूज़, खीरा और चारा मक्का जैसी सिंचित फसलें ली जाती हैं।"
+
+- id: npk
+  term: { en: "NPK", hi: "एनपीके (NPK)" }
+  definition:
+    en: "The three main plant nutrients — Nitrogen (N) for green growth, Phosphorus (P) for roots and flowering, Potassium (K) for grain filling and stress tolerance. Fertiliser bags show these as three numbers."
+    hi: "पौधे के तीन मुख्य पोषक — नाइट्रोजन (N) हरी वृद्धि के लिए, फॉस्फोरस (P) जड़ों और फूल के लिए, पोटैशियम (K) दाना भरने और तनाव सहने के लिए। खाद के बोरों पर ये तीन अंकों में लिखे होते हैं।"
+
+- id: urea
+  term: { en: "Urea", hi: "यूरिया" }
+  definition:
+    en: "The most common nitrogen fertiliser, 46% N. A white granule. Used mostly as a top-dressing in splits. Losing it to air and water is easy, so apply to moist soil and cover it."
+    hi: "सबसे आम नाइट्रोजन खाद, 46% N। सफेद दाना। ज़्यादातर भागों में ऊपरी छिड़काव के रूप में। हवा और पानी में इसका नुकसान आसान है, इसलिए नम मिट्टी में डालें और ढकें।"
+
+- id: dap
+  term: { en: "DAP", hi: "डीएपी (DAP)" }
+  definition:
+    en: "Di-ammonium phosphate — 18% N and 46% phosphorus (P₂O₅). The usual way to supply phosphorus, applied as a basal dose at sowing."
+    hi: "डाइ-अमोनियम फॉस्फेट — 18% N और 46% फॉस्फोरस (P₂O₅)। फॉस्फोरस देने का सामान्य तरीका, बुवाई पर आधार खुराक के रूप में।"
+
+- id: mop
+  term: { en: "MOP", hi: "एमओपी (MOP)" }
+  definition:
+    en: "Muriate of potash — 60% potassium (K₂O). The main potash fertiliser. Important for cotton, sugarcane, potato and banana; often skipped by mistake in cereals."
+    hi: "म्यूरेट ऑफ पोटाश — 60% पोटैशियम (K₂O)। मुख्य पोटाश खाद। कपास, गन्ना, आलू और केले के लिए महत्वपूर्ण; अनाज में अक्सर गलती से छोड़ दी जाती है।"
+
+- id: ssp
+  term: { en: "Single super phosphate (SSP)", hi: "सिंगल सुपर फॉस्फेट (SSP)" }
+  definition:
+    en: "A phosphorus fertiliser with 16% P₂O₅ that also supplies 11% sulphur and calcium. The best phosphorus source for oilseeds and pulses because of the sulphur."
+    hi: "16% P₂O₅ वाली फॉस्फोरस खाद जो 11% गंधक और कैल्शियम भी देती है। गंधक के कारण तिलहन और दलहन के लिए सर्वोत्तम फॉस्फोरस स्रोत।"
+
+- id: soil-health-card
+  term: { en: "Soil Health Card", hi: "मृदा स्वास्थ्य कार्ड" }
+  definition:
+    en: "A government report of your field's soil test — pH, organic carbon, N-P-K and micronutrient status — with a fertiliser recommendation. Get your soil tested every 2–3 years and follow the card instead of guessing."
+    hi: "आपके खेत की मिट्टी जाँच की सरकारी रिपोर्ट — pH, जैविक कार्बन, N-P-K और सूक्ष्म पोषक स्थिति — खाद सिफारिश के साथ। हर 2–3 साल में मिट्टी जाँच कराएँ और अनुमान के बजाय कार्ड का पालन करें।"
+
+- id: ipm
+  term: { en: "IPM (Integrated Pest Management)", hi: "समेकित नाशीजीव प्रबंधन (आईपीएम)" }
+  definition:
+    en: "Managing pests with the cheapest, safest tools first — resistant varieties, clean fields, traps, natural enemies, hand-picking — and using a pesticide only when scouting shows the pest has crossed an economic threshold."
+    hi: "कीटों को पहले सबसे सस्ते, सुरक्षित उपायों से नियंत्रित करना — प्रतिरोधी किस्में, साफ खेत, जाल, प्राकृतिक शत्रु, हाथ से चुनना — और कीटनाशक केवल तब जब निरीक्षण दिखाए कि कीट आर्थिक हानि स्तर पार कर गया है।"
+
+- id: eti
+  term: { en: "Economic threshold", hi: "आर्थिक हानि स्तर" }
+  definition:
+    en: "The pest level at which the cost of spraying is just worth the crop it saves. Below it, spraying loses money and kills helpful insects. Each pest has its own threshold (for example, 1–2 gram pod borer larvae per metre of row)."
+    hi: "वह कीट स्तर जिस पर छिड़काव की लागत उस फसल के बराबर हो जाती है जो वह बचाता है। इससे कम पर छिड़काव पैसा गँवाता है और उपयोगी कीट मारता है। हर कीट का अपना स्तर होता है (जैसे प्रति मीटर कतार 1–2 चना फली छेदक सूँडी)।"
+
+- id: phi
+  term: { en: "Pre-harvest interval (PHI)", hi: "कटाई-पूर्व अंतराल (PHI)" }
+  definition:
+    en: "The minimum number of days that must pass between the last pesticide spray and harvest, so residue in the produce is safe. It is printed on every pesticide label — always follow it."
+    hi: "अंतिम कीटनाशक छिड़काव और कटाई के बीच बीतने वाले न्यूनतम दिन, ताकि उपज में अवशेष सुरक्षित रहे। यह हर कीटनाशक लेबल पर छपा होता है — हमेशा पालन करें।"
+
+- id: cibrc
+  term: { en: "CIB&RC", hi: "केंद्रीय कीटनाशी बोर्ड (CIB&RC)" }
+  definition:
+    en: "The Central Insecticides Board & Registration Committee — the body that approves which pesticide may be used on which crop, at what dose, in India. If a use is not on the label, it is not legal or tested."
+    hi: "केंद्रीय कीटनाशी बोर्ड एवं पंजीकरण समिति — वह निकाय जो तय करता है कि भारत में कौन सा कीटनाशक किस फसल पर, किस मात्रा में उपयोग हो सकता है। यदि कोई उपयोग लेबल पर नहीं है, तो वह न वैध है न परखा हुआ।"
+
+- id: kvk
+  term: { en: "Krishi Vigyan Kendra (KVK)", hi: "कृषि विज्ञान केंद्र (KVK)" }
+  definition:
+    en: "A district-level farm science centre under ICAR that runs demonstrations, trains farmers, tests soil and gives local, season-specific advice. Your first place to confirm anything before spending money."
+    hi: "ICAR के अंतर्गत ज़िला-स्तरीय कृषि विज्ञान केंद्र जो प्रदर्शन चलाता है, किसानों को प्रशिक्षित करता है, मिट्टी जाँचता है और स्थानीय, ऋतु-विशिष्ट सलाह देता है। पैसा खर्च करने से पहले कुछ भी पुष्टि करने की आपकी पहली जगह।"
+
+- id: rhizobium
+  term: { en: "Rhizobium", hi: "राइज़ोबियम" }
+  definition:
+    en: "A helpful soil bacterium that lives in the root nodules of legumes (gram, soybean, moong, groundnut) and pulls nitrogen from the air for the plant. Sold as a seed inoculant — apply it correctly and a pulse needs almost no nitrogen fertiliser."
+    hi: "एक उपयोगी मृदा जीवाणु जो दलहनों (चना, सोयाबीन, मूँग, मूँगफली) की जड़ ग्रंथियों में रहता है और पौधे के लिए हवा से नाइट्रोजन खींचता है। बीज टीके के रूप में बिकता है — सही से लगाएँ तो दलहन को लगभग कोई नाइट्रोजन खाद नहीं चाहिए।"
+
+- id: nodule
+  term: { en: "Root nodule", hi: "जड़ ग्रंथि (गाँठ)" }
+  definition:
+    en: "A small round swelling on legume roots where Rhizobium bacteria fix nitrogen. Cut one open around 30 days after sowing — pink or red inside means it is working; white or green means it is not."
+    hi: "दलहन जड़ों पर छोटी गोल सूजन जहाँ राइज़ोबियम जीवाणु नाइट्रोजन स्थिर करते हैं। बुवाई के लगभग 30 दिन बाद एक काटें — अंदर गुलाबी या लाल का अर्थ काम कर रही है; सफेद या हरा का अर्थ नहीं।"
+
+- id: green-manure
+  term: { en: "Green manure", hi: "हरी खाद" }
+  definition:
+    en: "A quick legume crop like dhaincha or sunhemp, grown for 40–50 days and then ploughed into the soil while green. It adds nitrogen and organic matter and can replace 25–30 kg/ha of urea nitrogen for the next crop."
+    hi: "ढैंचा या सनई जैसी तेज़ दलहन फसल, 40–50 दिन उगाकर हरी अवस्था में मिट्टी में जोत दी जाती है। यह नाइट्रोजन और जैविक पदार्थ जोड़ती है और अगली फसल हेतु 25–30 कि.ग्रा./हे. यूरिया नाइट्रोजन की जगह ले सकती है।"
+
+- id: fym
+  term: { en: "Farmyard manure (FYM)", hi: "गोबर की खाद" }
+  definition:
+    en: "Well-rotted cattle dung and urine mixed with bedding. Use only when fully decomposed (dark, crumbly, no smell) — raw manure attracts termites and white grubs and can burn young roots."
+    hi: "बिछावन के साथ मिला अच्छी तरह सड़ा गोबर और मूत्र। केवल पूरी तरह सड़ने पर उपयोग करें (गहरा, भुरभुरा, बिना गंध) — कच्ची खाद दीमक और सफेद गिडार को बुलाती है और कोमल जड़ों को जला सकती है।"
+
+- id: seed-treatment
+  term: { en: "Seed treatment", hi: "बीज उपचार" }
+  definition:
+    en: "Coating seed before sowing with a fungicide, then an insecticide, and last a bio-inoculant, to protect against soil diseases and early pests. The cheapest crop protection you can do — order matters: chemicals first, living cultures last."
+    hi: "बुवाई से पहले बीज को फफूँदनाशक, फिर कीटनाशक, और अंत में जैव-टीके से लेपना, ताकि मृदा रोगों और प्रारंभिक कीटों से बचाव हो। सबसे सस्ती फसल सुरक्षा — क्रम महत्वपूर्ण: पहले रसायन, अंत में जीवित कल्चर।"
+
+- id: dap-foliar
+  term: { en: "Foliar spray", hi: "पर्ण छिड़काव" }
+  definition:
+    en: "Spraying a dilute nutrient solution (such as 2% DAP or potassium nitrate, or a micronutrient) directly on the leaves. A fast top-up at flowering or pod fill, or to fix a visible deficiency — not a replacement for soil fertiliser."
+    hi: "पतला पोषक घोल (जैसे 2% DAP या पोटैशियम नाइट्रेट, या सूक्ष्म पोषक) सीधे पत्तियों पर छिड़कना। फूल या फली भरते समय तेज़ पूर्ति, या दिखती कमी ठीक करने हेतु — मिट्टी की खाद का विकल्प नहीं।"
+
+- id: dead-heart
+  term: { en: "Dead-heart", hi: "मृत गोभ (डेड-हार्ट)" }
+  definition:
+    en: "When the central shoot of a young cereal or cane plant dries and dies while the outer leaves stay green — the classic sign of a stem borer inside. Pull gently; a dead-heart comes out easily."
+    hi: "जब युवा अनाज या गन्ना पौधे का बीच का अंकुर सूखकर मर जाता है जबकि बाहरी पत्तियाँ हरी रहती हैं — अंदर तना छेदक का क्लासिक संकेत। धीरे खींचें; मृत गोभ आसानी से निकलता है।"
+
+- id: lodging
+  term: { en: "Lodging", hi: "फसल का गिरना (लॉजिंग)" }
+  definition:
+    en: "When a standing crop bends over or falls flat before harvest, usually after wind or rain. Caused by too much nitrogen, deep water, a tall variety, a dense stand, or stem borer. Lodged crops lose yield and are hard to harvest."
+    hi: "जब खड़ी फसल कटाई से पहले झुक जाती है या सपाट गिर जाती है, आमतौर पर हवा या बारिश के बाद। कारण — बहुत अधिक नाइट्रोजन, गहरा पानी, लंबी किस्म, घनी फसल, या तना छेदक। गिरी फसल उपज खोती है और काटना कठिन।"
+
+- id: earthing-up
+  term: { en: "Earthing up", hi: "मिट्टी चढ़ाना" }
+  definition:
+    en: "Drawing soil up around the base of the plant rows. It anchors the crop against lodging, covers top-dressed fertiliser, buries weeds, and (in potato and sugarcane) improves the harvestable part."
+    hi: "पौधों की कतारों के आधार के चारों ओर मिट्टी खींचना। यह फसल को गिरने से बचाता है, ऊपरी खाद ढकता है, खरपतवार दबाता है, और (आलू और गन्ने में) कटाई योग्य भाग सुधारता है।"
+
+- id: refuge
+  term: { en: "Refuge (in Bt cotton)", hi: "रेफ्यूज (Bt कपास में)" }
+  definition:
+    en: "A block or border of non-Bt cotton sown around a Bt field, required by law. It lets some bollworms survive without meeting the Bt toxin, which slows the pest developing resistance. Skipping the refuge speeds up resistance for everyone."
+    hi: "Bt खेत के चारों ओर बोई गई गैर-Bt कपास की पट्टी या मेड़, कानून द्वारा आवश्यक। यह कुछ सुंडियों को Bt विष से मिले बिना जीवित रहने देती है, जिससे कीट में प्रतिरोध विकसित होना धीमा होता है। रेफ्यूज छोड़ना सबके लिए प्रतिरोध तेज़ करता है।"
+
+- id: dsr
+  term: { en: "Direct seeded rice (DSR)", hi: "सीधी बुवाई धान (DSR)" }
+  definition:
+    en: "Sowing rice seed straight into the field with a drill, instead of raising a nursery and transplanting. It saves water, labour and time and cuts methane, but needs a level field and sharper weed control."
+    hi: "नर्सरी तैयार कर रोपाई करने के बजाय ड्रिल से धान का बीज सीधे खेत में बोना। यह पानी, मज़दूरी और समय बचाता है और मीथेन घटाता है, पर समतल खेत और सख़्त खरपतवार नियंत्रण चाहिए।"
+
+- id: ratoon
+  term: { en: "Ratoon crop", hi: "पेड़ी फसल (रैटून)" }
+  definition:
+    en: "A second crop that grows back from the stubble of the first without replanting — common in sugarcane and sometimes rice and pigeon pea. It saves seed and planting cost but yields less and carries over pests and disease."
+    hi: "पहली फसल के ठूँठ से बिना पुनः बुवाई के उगने वाली दूसरी फसल — गन्ने में और कभी धान तथा अरहर में आम। यह बीज और बुवाई लागत बचाती है पर कम उपज देती है और कीट तथा रोग आगे ले जाती है।"
+
+- id: brix
+  term: { en: "Brix", hi: "ब्रिक्स" }
+  definition:
+    en: "A measure of the sugar content of sugarcane juice, read with a small hand refractometer. A ripe cane ready for the mill reads about 18–20 or more, and evenly from top to bottom."
+    hi: "गन्ने के रस की चीनी मात्रा का माप, छोटे हाथ रेफ्रैक्टोमीटर से पढ़ा जाता है। मिल के लिए तैयार पका गन्ना लगभग 18–20 या अधिक पढ़ता है, और ऊपर से नीचे तक समान।"
+
+- id: bigha
+  term: { en: "Bigha", hi: "बीघा" }
+  definition:
+    en: "A traditional land area unit that is NOT standard — it ranges from about 0.08 ha in West Bengal to 0.25 ha (pakka) in parts of the north. Always check the local bigha before buying inputs or quoting yields."
+    hi: "एक पारंपरिक भूमि क्षेत्र इकाई जो मानक नहीं है — यह पश्चिम बंगाल में लगभग 0.08 हे. से उत्तर के कुछ भागों में 0.25 हे. (पक्का) तक होती है। इनपुट खरीदने या उपज बताने से पहले हमेशा स्थानीय बीघा जाँचें।"
+
+- id: quintal
+  term: { en: "Quintal", hi: "क्विंटल" }
+  definition:
+    en: "100 kilograms. Crop yields and mandi prices in India are almost always quoted per quintal (for example, ₹2,275 per quintal). One tonne = 10 quintals."
+    hi: "100 किलोग्राम। भारत में फसल उपज और मंडी भाव लगभग हमेशा प्रति क्विंटल बताए जाते हैं (जैसे ₹2,275 प्रति क्विंटल)। एक टन = 10 क्विंटल।"
+
+- id: msp
+  term: { en: "Minimum Support Price (MSP)", hi: "न्यूनतम समर्थन मूल्य (MSP)" }
+  definition:
+    en: "A price announced by the government before each season for major crops, at which government agencies will buy if the market falls below it. Announced per quintal. Actual purchase happens mainly for wheat, paddy and some pulses and oilseeds in procuring states."
+    hi: "प्रमुख फसलों के लिए हर ऋतु से पहले सरकार द्वारा घोषित एक मूल्य, जिस पर बाज़ार उससे नीचे गिरने पर सरकारी एजेंसियाँ खरीदेंगी। प्रति क्विंटल घोषित। वास्तविक खरीद मुख्यतः गेहूँ, धान और खरीद करने वाले राज्यों में कुछ दलहन-तिलहन की होती है।"
+
+- id: pusa-decomposer
+  term: { en: "Pusa decomposer", hi: "पूसा डीकम्पोज़र" }
+  definition:
+    en: "A capsule or liquid of fungi developed by IARI that rots crop stubble in the field in about 20–25 days, so it can be mixed into the soil instead of burned."
+    hi: "IARI द्वारा विकसित फफूँद का कैप्सूल या तरल जो खेत में फसल ठूँठ को लगभग 20–25 दिन में सड़ा देता है, ताकि इसे जलाने के बजाय मिट्टी में मिलाया जा सके।"
+
+- id: transplanting
+  term: { en: "Transplanting", hi: "रोपाई" }
+  definition:
+    en: "Moving young seedlings from a nursery to the main field — standard for rice and many vegetables. Lets you manage a small area intensively for the first weeks and gives an even, weed-free start in the field."
+    hi: "युवा पौध को नर्सरी से मुख्य खेत में ले जाना — धान और कई सब्ज़ियों के लिए मानक। यह पहले सप्ताहों में छोटे क्षेत्र की गहन देखभाल देता है और खेत में समान, खरपतवार-मुक्त शुरुआत देता है।"
+
+- id: scouting
+  term: { en: "Scouting", hi: "फसल निरीक्षण (स्काउटिंग)" }
+  definition:
+    en: "Walking the field on a fixed pattern once or twice a week and actually counting pests, eggs, natural enemies and disease spots on a set number of plants — so spray decisions are based on numbers, not fear."
+    hi: "सप्ताह में एक-दो बार निश्चित पैटर्न पर खेत में चलना और तय संख्या के पौधों पर कीट, अंडे, प्राकृतिक शत्रु और रोग धब्बे वास्तव में गिनना — ताकि छिड़काव के फैसले डर पर नहीं, संख्या पर आधारित हों।"

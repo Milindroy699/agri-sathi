@@ -1,0 +1,90 @@
+---
+import { useTranslations, pick, type Locale } from '../i18n/utils';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  locale: Locale;
+  nutrition: CollectionEntry<'crops'>['data']['nutrition'];
+}
+const { locale, nutrition } = Astro.props;
+const t = useTranslations(locale);
+const { recommendedNpk, schedule, soilTestNote, basisNote } = nutrition;
+const organic = pick(nutrition.organic, locale) ?? nutrition.organic.en;
+---
+
+<div class="nutrition stack">
+  <div class="npk">
+    <p class="npk__label">{t('nutrition.recommended')}</p>
+    <div class="npk__grid">
+      <div><span>N</span><strong>{recommendedNpk.n}</strong>kg</div>
+      <div><span>P₂O₅</span><strong>{recommendedNpk.p}</strong>kg</div>
+      <div><span>K₂O</span><strong>{recommendedNpk.k}</strong>kg</div>
+    </div>
+    {basisNote && <p class="npk__note">{pick(basisNote, locale)}</p>}
+  </div>
+
+  {schedule.length > 0 && (
+    <div>
+      <p class="section-label">{t('nutrition.schedule')}</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>{t('nutrition.stage')}</th>
+              <th>{t('nutrition.timing')}</th>
+              <th>N</th>
+              <th>P₂O₅</th>
+              <th>K₂O</th>
+            </tr>
+          </thead>
+          <tbody>
+            {schedule.map((row) => (
+              <tr>
+                <td>{pick(row.stage, locale)}</td>
+                <td>{pick(row.timing, locale)}</td>
+                <td>{row.n}</td>
+                <td>{row.p}</td>
+                <td>{row.k}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )}
+
+  {organic.length > 0 && (
+    <div>
+      <p class="section-label">{t('nutrition.organic')}</p>
+      <ul class="bullets">
+        {organic.map((o) => <li>{o}</li>)}
+      </ul>
+    </div>
+  )}
+
+  {soilTestNote && (
+    <p class="callout callout--caution">🧪 <strong>{t('nutrition.soilTest')}:</strong> {pick(soilTestNote, locale)}</p>
+  )}
+</div>
+
+<style>
+  .npk { background: var(--color-brand-light); border-radius: var(--radius); padding: var(--space-4); }
+  .npk__label { font-weight: var(--weight-medium); margin-bottom: var(--space-2); }
+  .npk__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-2); text-align: center; }
+  .npk__grid div {
+    background: var(--color-surface);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2);
+  }
+  .npk__grid span { display: block; font-size: var(--text-xs); color: var(--color-text-soft); }
+  .npk__grid strong { display: block; font-size: var(--text-xl); color: var(--color-brand-dark); }
+  .npk__note { font-size: var(--text-sm); color: var(--color-text-soft); margin-top: var(--space-2); }
+
+  .section-label { font-weight: var(--weight-bold); margin-bottom: var(--space-2); }
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { border-collapse: collapse; width: 100%; font-size: var(--text-sm); min-width: 30rem; }
+  th, td { text-align: left; padding: var(--space-2); border-bottom: 1px solid var(--color-border); }
+  th { background: var(--color-surface-2); font-weight: var(--weight-medium); }
+  .bullets { padding-left: 1.25rem; }
+  .bullets li { margin-block: var(--space-1); }
+</style>

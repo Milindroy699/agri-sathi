@@ -1,0 +1,19 @@
+{
+  "name": "agri-sathi",
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Agri Sathi — an offline-first farming companion PWA for Indian farmers",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.6.1"
+  },
+  "devDependencies": {
+    "@vite-pwa/astro": "^0.5.0",
+    "sharp": "^0.33.5"
+  }
+}
